@@ -1,4 +1,8 @@
-<?php ob_start(); ?>
+<?php 
+ob_start();
+require('../database/create_database.php');
+require('../database/create_tables.php');
+?>
     <div class=main">
         <h2>Inscription</h2>
         <form action="../management/login_request.php" method="POST">
