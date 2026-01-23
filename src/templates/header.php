@@ -13,8 +13,11 @@
         </div>
         
         <div class="header-main">
-            <a class="logo">Shop</a>
-            
+          <div class="logo-link">
+    <img src="../images/logo_ecommerce.png" 
+         alt="Logo Kickstep" 
+         style="height: 50px; width: auto; filter: invert(1); mix-blend-mode: screen;">
+</div>
             <nav>
                 <ul class="nav-main">
                     <li><a href="index.php">Accueil</a></li>

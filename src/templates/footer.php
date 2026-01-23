@@ -10,7 +10,11 @@
     <footer class="site-footer">
     <div class="footer-container">
         <div class="footer-col">
-            <a href="#" class="logo">SHOP</a>
+          <div class="logo-link">
+    <img src="../images/logo_ecommerce.png" 
+         alt="Logo Kickstep" 
+         style="height: 50px; width: auto; filter: invert(1); mix-blend-mode: screen;">
+</div>
             <p class="footer-desc">
                 La référence du style urbain. Qualité premium et designs exclusifs pour votre garde-robe.
             </p>
