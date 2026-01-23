@@ -20,4 +20,4 @@ require('../database/create_tables.php');
         </form>
     </div>
 <?php $content = ob_get_clean(); ?>
-<?php require('layout.php') ?>
+<?php require('../templates/layout.php') ?>
