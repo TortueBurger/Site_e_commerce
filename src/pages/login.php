@@ -1,11 +1,12 @@
 <?php 
 ob_start();
-require('../database/create_database.php');
-require('../database/create_tables.php');
+require_once('../database/create_database.php');
+require_once('../database/create_tables.php');
+require_once('../management/login_request.php');
 ?>
     <div class=main">
         <h2>Inscription</h2>
-        <form action="../management/login_request.php" method="POST">
+        <form action="../pages/login.php" method="POST">
             <label>Username :</label><br>
             <input type="text" name="username" maxlength="16" required><br><br>
 
