@@ -37,9 +37,7 @@ function get_user_with_mail(){
 
     // Result
     if (mysqli_num_rows($result) > 0){
-        while ($row = mysqli_fetch_assoc($result)){
-            echo $row["email"];
-        }
+        header('Location: ../pages/login.php?error=1'); // Already Used
     } else{
         add_user(); // Add user if email not used
     }
@@ -48,7 +46,7 @@ function get_user_with_mail(){
 
 
 // Create user with the form inputs
-function add_user(){
+function add_user(){    
     global $name, $password, $email, $conn;
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
@@ -60,12 +58,21 @@ function add_user(){
 
     // Use previous sql command in the database
     if ($conn -> query($sql) == TRUE){
-        echo "Added new user";
+        start_session($name, $email);
     // Error
     } else{
         echo $conn -> error;
     }
 
+}
+
+// Starts a new session with the user data
+function start_session($name, $email){
+    session_start();
+    $_SESSION["name"] = $name;
+    $_SESSION["email"] = $email;
+    header('Location: ../pages/homepage.php');
+    exit();
 }
 
 // Disconnect from database
