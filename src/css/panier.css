@@ -1,0 +1,151 @@
+/* --- CONFIGURATION GLOBALE --- */
+.cart-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    display: flex;
+    gap: 40px;
+    font-family: 'Poppins', sans-serif;
+}
+
+h1 {
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #000;
+    padding-bottom: 10px;
+}
+
+/* --- LISTE DES PRODUITS (Gauche) --- */
+.cart-items {
+    flex: 2;
+    background: #fff;
+    border-radius: 8px;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding: 20px 0;
+}
+
+.cart-item img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 20px;
+}
+
+.item-details {
+    flex-grow: 1;
+}
+
+.item-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.item-price {
+    color: #666;
+}
+
+.item-quantity {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.qty-input {
+    width: 40px;
+    text-align: center;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.btn-remove {
+    color: #ff4d4d;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-left: 20px;
+}
+
+.btn-remove:hover {
+    text-decoration: underline;
+}
+
+/* --- RÉSUMÉ COMMANDE (Droite) --- */
+.cart-summary {
+    flex: 1;
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 8px;
+    height: fit-content;
+    border: 1px solid #eee;
+}
+
+.summary-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    font-size: 0.95rem;
+}
+
+.summary-total {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid #000;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.btn-checkout {
+    display: block;
+    width: 100%;
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    padding: 15px;
+    text-decoration: none;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-top: 25px;
+    transition: background 0.3s;
+}
+
+.btn-checkout:hover {
+    background-color: #333;
+}
+
+.empty-cart {
+    text-align: center;
+    padding: 50px;
+}
+
+.btn-back {
+    display: inline-block;
+    margin-top: 20px;
+    color: #000;
+    text-decoration: underline;
+}
+
+/* Responsive Mobile */
+@media (max-width: 768px) {
+    .cart-container {
+        flex-direction: column;
+    }
+}

@@ -1,0 +1,196 @@
+/* --- HERO SECTION (Bannière principale) --- */
+.hero {
+    height: 80vh; 
+    /* Image de fond haute qualité (Unsplash) */
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1552346154-21d32810aba3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-color: #333;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    padding: 0 20px;
+}
+
+.hero h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 4rem;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    letter-spacing: 5px;
+    text-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+.hero p {
+    font-size: 1.5rem;
+    max-width: 600px;
+    margin-bottom: 40px;
+    font-weight: 300;
+}
+
+/* Bouton principal */
+.btn-cta {
+    padding: 15px 50px;
+    background-color: #fff;
+    color: #000;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+    border: 2px solid #fff;
+    display: inline-block;
+}
+
+.btn-cta:hover {
+    background-color: transparent;
+    color: #fff;
+    transform: translateY(-5px);
+}
+
+/* --- SECTION TEXTE (Concept) --- */
+.concept-section {
+    padding: 100px 20px;
+    background-color: #111;
+    color: #fff;
+    text-align: center;
+}
+
+.concept-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.concept-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: #f1f1f1;
+    position: relative;
+    display: inline-block;
+}
+
+.concept-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: #fff;
+    margin: 15px auto 0;
+}
+
+.concept-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #aaa;
+    margin-bottom: 20px;
+}
+
+/* --- GALERIE PHOTO (Modifiée pour petites images) --- */
+.gallery-section {
+    display: grid;
+    /* On réduit la taille minimale des colonnes */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+    gap: 15px;
+    padding: 20px;
+    background-color: #0a0a0a; /* Fond quasi noir */
+}
+
+.gallery-item {
+    position: relative;
+    height: 300px; /* Hauteur réduite */
+    overflow: hidden;
+    cursor: pointer;
+    background-color: #000; /* Fond noir derrière l'image */
+    border-radius: 8px; /* Coins arrondis sympa */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gallery-item img {
+    /* MODIFICATION CLÉ : On n'étire plus l'image */
+    width: auto;  /* Largeur naturelle */
+    height: auto; /* Hauteur naturelle */
+    max-width: 100%; /* Ne dépasse pas le cadre */
+    max-height: 100%; /* Ne dépasse pas le cadre */
+    object-fit: contain; /* L'image entière est visible sans déformation */
+    
+    transition: transform 0.5s ease;
+    /* On enlève le grayscale pour garder les couleurs vives */
+    /* filter: grayscale(30%); */ 
+}
+
+/* Effets au survol */
+.gallery-item:hover img {
+    transform: scale(1.05); /* Zoom plus léger */
+    /* filter: grayscale(0%); */
+}
+
+.gallery-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 15px;
+    /* Dégradé plus sombre pour la lisibilité */
+    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+    color: white;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 2;
+}
+
+.gallery-item:hover .gallery-overlay {
+    opacity: 1;
+}
+
+.overlay-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* --- SECTION FINALE --- */
+.final-cta {
+    padding: 80px 20px;
+    background-color: #ffffff;
+    color: #000;
+    text-align: center;
+}
+
+.final-cta h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.btn-black {
+    padding: 15px 40px;
+    background-color: #000;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background 0.3s;
+    display: inline-block;
+}
+
+.btn-black:hover {
+    background-color: #333;
+}
+
+/* Responsive Mobile */
+@media (max-width: 768px) {
+    .hero h1 { font-size: 2.5rem; }
+    .hero p { font-size: 1rem; }
+    .concept-section { padding: 60px 20px; }
+    .gallery-item { height: 250px; } /* Encore plus petit sur mobile */
+}
