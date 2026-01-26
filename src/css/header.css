@@ -13,16 +13,21 @@ body {
     font-family: 'Poppins', sans-serif;
     background-color: #ffffff;
     color: #000000;
+    /* ON RETIRE LE PADDING-TOP : Le header prend maintenant sa vraie place */
 }
 
 header {
     background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
     color: #ffffff;
-    position: sticky;
-    top: 0;
+    
+    /* MODIFICATION : On remet en "relative" pour qu'il reste en haut de page */
+    position: relative; 
+    width: 100%;
     z-index: 1000;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
+
+/* On supprime la classe .header-hidden car on n'en a plus besoin */
 
 .header-top {
     background: linear-gradient(90deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
@@ -35,7 +40,7 @@ header {
 
 .header-main {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; 
     align-items: center;
     padding: 15px 5%;
     gap: 15px;
@@ -43,17 +48,45 @@ header {
     margin: 0 auto;
 }
 
-.logo {
-    font-family: 'Orbitron', sans-serif; 
-    font-size: 28px; 
-    font-weight: 900; 
-    letter-spacing: 2px;
-    color: #fff;
-    text-transform: uppercase;
+/* --- LOGO & TEXTE --- */
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
     text-decoration: none;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    cursor: pointer;
 }
 
+.logo-img {
+    height: 50px;
+    width: auto;
+    filter: invert(1);
+    mix-blend-mode: screen; 
+    transition: transform 0.3s ease;
+}
+
+.logo-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: text-shadow 0.3s ease, transform 0.3s ease;
+}
+
+/* --- HOVER --- */
+.logo-container:hover .logo-img {
+    transform: scale(1.1);
+}
+
+.logo-container:hover .logo-text {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ffffff;
+    transform: scale(1.05);
+}
+
+
+/* --- BARRE DE RECHERCHE --- */
 .search-bar {
     display: flex;
     align-items: center;
@@ -77,12 +110,13 @@ header {
 .header-actions {
     display: flex;
     gap: 15px;
-    order: -1;
+    order: -1; 
     position: absolute;
     top: 35px;
     right: 20px;
 }
 
+/* --- MENU --- */
 .nav-main {
     display: flex;
     flex-wrap: wrap;
@@ -108,7 +142,6 @@ header {
     background: none;
     border: none;
     color: #ffffff;
-    font-size: 20px;
     cursor: pointer;
 }
 
@@ -128,21 +161,24 @@ header {
     font-weight: bold;
 }
 
+/* --- VERSION PC --- */
 @media (min-width: 900px) {
+    
+    /* Plus besoin de padding-top ici non plus */
+    
     .header-top {
         font-size: 13px;
         padding: 10px 0;
     }
 
     .header-main {
-        flex-direction: row;
+        flex-direction: row; 
         justify-content: space-between;
-        padding: 20px 5%;
+        padding: 15px 5%;
         gap: 0;
     }
 
-    .logo {
-        font-size: 34px;
+    .logo-container {
         order: 0;
     }
 
@@ -188,32 +224,5 @@ header {
     .header-actions {
         position: static;
         order: 3;
-    }
-}
-.logo-link {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-}
-.logo-img {
-    height: 50px;
-    width: auto;  
-    
- 
-    filter: invert(1); 
-    
-
-    mix-blend-mode: screen; 
-    
-    transition: transform 0.3s ease;
-}
-
-.logo-link:hover .logo-img {
-    transform: scale(1.1); 
-}
-
-@media (max-width: 768px) {
-    .logo-img {
-        height: 40px;
     }
 }
