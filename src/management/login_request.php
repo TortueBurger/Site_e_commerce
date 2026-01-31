@@ -1,15 +1,11 @@
 <<?php
-$servername = "localhost";
-$username = "root";
-$db_password = "";
-$db_name = "e_commerce_database";
-
-// Create connection
-$conn = new mysqli($servername, $username, $db_password, $db_name);
+//Create connection
+require_once('../config/config.php');
+$connection = new mysqli(SERVER_NAME, SERVER_USERNAME, SERVER_PASSWORD, DB_NAME);
 
 // Check connection
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
+if ($connection->connect_error) {
+  die("Connection failed: " . $connection->connect_error);
 }
 
 $email = $password = "";
@@ -42,11 +38,11 @@ function process_input($data){
 }
 
 function get_user_with_mail(){
-    global $email, $conn, $password;
+    global $email, $connection, $password;
 
     // Find user in database
     $sql = "SELECT name, email, password from users WHERE email = '$email'";
-    $result = mysqli_query($conn, $sql);
+    $result = mysqli_query($connection, $sql);
 
     // Result
     if (mysqli_num_rows($result) > 0){
@@ -79,6 +75,6 @@ function start_session($name, $email){
 }
 
 // Disconnect from database
-$conn -> close();
+$connection -> close();
 
 ?>

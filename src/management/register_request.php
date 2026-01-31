@@ -1,14 +1,10 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$db_password = "";
-$db_name = "e_commerce_database";
-
 // Create connection
-$conn = new mysqli($servername, $username, $db_password, $db_name);
+require_once('../config/config.php');
+$connection = new mysqli(SERVER_NAME, SERVER_USERNAME, SERVER_PASSWORD, DB_NAME);
 // Check connection
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
+if ($connection->connect_error) {
+  die("Connection failed: " . $connection->connect_error);
 }
 
 $name = $email = $password = "";
@@ -42,10 +38,10 @@ function process_input($data){
 }
 
 function get_user_with_mail(){
-    global $email, $conn;
+    global $email, $connection;
     // Check if a user is already registered with the entered email
     $sql = "SELECT email from users WHERE email = '$email'";
-    $result = mysqli_query($conn, $sql);
+    $result = mysqli_query($connection, $sql);
 
     // Result
     if (mysqli_num_rows($result) > 0){
@@ -59,7 +55,7 @@ function get_user_with_mail(){
 
 // Create user with the form inputs
 function add_user(){    
-    global $name, $password, $email, $conn;
+    global $name, $password, $email, $connection;
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
     // Add new user to users table (SQL Command).
@@ -69,11 +65,11 @@ function add_user(){
     ";
 
     // Use previous sql command in the database
-    if ($conn -> query($sql) == TRUE){
+    if ($connection -> query($sql) == TRUE){
         start_session($name, $email);
     // Error
     } else{
-        echo $conn -> error;
+        echo $connection -> error;
     }
 
 }
@@ -88,6 +84,6 @@ function start_session($name, $email){
 }
 
 // Disconnect from database
-$conn -> close();
+$connection -> close();
 
 ?>
