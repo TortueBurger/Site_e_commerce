@@ -1,0 +1,212 @@
+/* --- CONFIGURATION GLOBALE --- */
+.drop-container {
+    background-color: #000;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    padding-bottom: 60px;
+    min-height: 100vh;
+    overflow-x: hidden; /* Évite le scroll horizontal sur mobile */
+}
+
+/* --- HEADER DU DROP (Version Mobile par défaut) --- */
+.drop-header {
+    text-align: center;
+    padding: 40px 15px; /* Marges réduites sur mobile */
+}
+
+.drop-header h4 {
+    color: #888;
+    letter-spacing: 2px;
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.drop-header h1 {
+    font-size: 2rem; /* Titre plus petit pour mobile */
+    font-weight: 900;
+    letter-spacing: 1px;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    line-height: 1.1;
+}
+
+/* --- BADGE DATE --- */
+.drop-date-badge {
+    display: inline-flex;
+    align-items: center;
+    border: 2px solid #fff;
+    padding: 8px 20px;
+    border-radius: 50px;
+    margin-bottom: 25px;
+}
+
+.drop-date-badge .day {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-right: 10px;
+    line-height: 1;
+}
+
+.drop-date-badge .month-year {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+/* --- COMPTE À REBOURS (Adapté Mobile) --- */
+.countdown {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; /* Permet de passer à la ligne si l'écran est minuscule */
+    gap: 15px;       /* Petit écart sur mobile */
+    margin-top: 25px;
+}
+
+.countdown > div {
+    text-align: center;
+    min-width: 50px; /* Assure une largeur minimale */
+}
+
+.countdown > div > span:first-child {
+    font-size: 1.5rem; /* Chiffres lisibles mais pas géants */
+    display: block;
+    font-weight: 800;
+    color: #fff;
+}
+
+.countdown > div > span:last-child {
+    font-size: 0.6rem;
+    color: #888;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-top: 3px;
+    display: block;
+}
+
+/* --- GRILLE PRODUITS (Colonne par défaut) --- */
+.exclusive-grid {
+    display: flex;
+    flex-direction: column; /* Empile les cartes verticalement */
+    align-items: center;    /* Centre les cartes */
+    gap: 30px;
+    padding: 0 15px;
+}
+
+/* --- CARTE PRODUIT --- */
+.drop-card {
+    background: #fff;
+    color: #000;
+    width: 100%;         /* Prend toute la largeur dispo */
+    max-width: 400px;    /* Mais ne dépasse jamais 400px */
+    border-radius: 20px;
+    padding: 20px;
+    position: relative;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.badge-date {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #000;
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    z-index: 2;
+}
+
+.drop-card img {
+    width: 100%;
+    height: auto;        /* Hauteur automatique pour respecter l'image */
+    max-height: 250px;   /* Limite pour ne pas être trop haut */
+    object-fit: contain;
+    margin-bottom: 15px;
+    filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1));
+}
+
+.drop-info h3 {
+    font-size: 1rem;
+    font-weight: 800;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.price {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.btn-notify {
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 12px 0;
+    width: 100%;
+    border-radius: 30px;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background 0.3s;
+    font-size: 0.9rem;
+}
+
+/* =========================================
+   MEDIA QUERIES (Version TABLETTE & DESKTOP)
+   C'est ici qu'on agrandit tout !
+   ========================================= */
+
+@media (min-width: 768px) {
+
+    /* Le header devient plus aéré */
+    .drop-header {
+        padding: 80px 20px;
+    }
+
+    .drop-header h1 {
+        font-size: 3.5rem; /* Gros titre sur PC */
+        letter-spacing: 3px;
+    }
+
+    .drop-header h4 {
+        font-size: 1rem;
+        letter-spacing: 4px;
+    }
+
+    /* Le timer grossit */
+    .countdown {
+        gap: 30px;
+    }
+
+    .countdown > div > span:first-child {
+        font-size: 2.5rem; /* Très gros chiffres */
+    }
+
+    .countdown > div > span:last-child {
+        font-size: 0.8rem;
+    }
+
+    /* La grille passe à l'horizontale */
+    .exclusive-grid {
+        flex-direction: row; /* Les produits se mettent côte à côte */
+        justify-content: center;
+        flex-wrap: wrap;
+        padding: 0 40px;
+    }
+
+    /* Les cartes deviennent fixes */
+    .drop-card {
+        width: 380px; /* Largeur fixe standard PC */
+    }
+
+    .drop-card:hover {
+        transform: translateY(-10px); /* Effet de survol (uniquement PC/Tablette) */
+    }
+}
