@@ -1,4 +1,4 @@
-<?php
+<<?php
 $servername = "localhost";
 $username = "root";
 $db_password = "";
@@ -6,20 +6,20 @@ $db_name = "e_commerce_database";
 
 // Create connection
 $conn = new mysqli($servername, $username, $db_password, $db_name);
+
 // Check connection
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-$name = $email = $password = "";
+$email = $password = "";
 
 // Get user inputs from Form
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
     if (!is_email_valid($_POST["email"])){
-        header('Location: ../pages/register.php?error=1');
+        header('Location: ../pages/login.php?error=1');
         exit;
     }
-    $name = process_input($_POST["username"]);
     $password = process_input($_POST["password"]);
     $email = process_input($_POST["email"]);
     get_user_with_mail();
@@ -42,40 +42,31 @@ function process_input($data){
 }
 
 function get_user_with_mail(){
-    global $email, $conn;
-    // Check if a user is already registered with the entered email
-    $sql = "SELECT email from users WHERE email = '$email'";
+    global $email, $conn, $password;
+
+    // Find user in database
+    $sql = "SELECT name, email, password from users WHERE email = '$email'";
     $result = mysqli_query($conn, $sql);
 
     // Result
     if (mysqli_num_rows($result) > 0){
-        header('Location: ../pages/register.php?error=1'); // Already Used
+        while($row = $result->fetch_assoc()){
+            if ($email == $row["email"]){
+                check_password($email, $password, $row["password"], $row["name"]);
+            }
+        }
     } else{
-        add_user(); // Add user if email not used
+        header('Location: ../pages/login.php?error=1'); // Already Used
     }
 
 }
 
-
-// Create user with the form inputs
-function add_user(){    
-    global $name, $password, $email, $conn;
-    $password_hash = password_hash($password, PASSWORD_DEFAULT);
-
-    // Add new user to users table (SQL Command).
-    $sql = "
-        INSERT INTO users (name, email, password) 
-        VALUES ('$name', '$email', '$password_hash')
-    ";
-
-    // Use previous sql command in the database
-    if ($conn -> query($sql) == TRUE){
+function check_password($email, $password, $password_hash, $name){
+    if (password_verify($password, $password_hash)){
         start_session($name, $email);
-    // Error
     } else{
-        echo $conn -> error;
+        header('Location: ../pages/login.php?error=1');
     }
-
 }
 
 // Starts a new session with the user data
