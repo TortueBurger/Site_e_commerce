@@ -1,10 +1,16 @@
 <?php 
 ob_start();
-require_once('../management/login_request.php');
+require_once('../database/create_database.php');
+require_once('../database/create_tables.php');
 require_once('../management/order_gestion.php');
-add_to_order(1, 2); // Example call to add item with ID 2 to user with ID 1
-    
-$input_error = false;
+require_once('../management/register_request.php');
+
+if (isset($_SESSION["name"])){
+    echo $_SESSION["name"];
+}
+
+// Email Already used error
+$mail_error = false;
 if (isset($_GET["error"]) && $_GET["error"] == 1){
     $input_error = true;
 }
@@ -16,11 +22,13 @@ function show_error_message(){
     }
 }
 
-?>
 
-<div class=main">
-        <h2>Connexion</h2>
-        <form action="login.php" method="POST">
+?>
+    <div class="main">
+        <h2>Inscription</h2>
+        <form action="../pages/login.php" method="POST">
+            <label>Username :</label><br>
+            <input type="text" name="username" maxlength="16" required><br><br>
 
             <label>Email :</label><br>
             <input type="email" name="email" required><br>
