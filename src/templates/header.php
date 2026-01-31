@@ -9,7 +9,7 @@
 <body>
     <header>
         <div class="header-top">
-            Livraison gratuite à partir de 50€ | Retours sous 30 jours
+            Livraison gratuite à partir de 200€ | Retours sous 30 jours
         </div>
         
         <div class="header-main">                

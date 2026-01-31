@@ -2,42 +2,46 @@
 body {
     background-color: #121212;
     color: #ffffff;
+    margin: 0; /* Important pour éviter les marges par défaut */
+    font-family: 'Poppins', sans-serif; /* Police par défaut */
 }
 
-/* --- BANNIÈRE TITRE --- */
+/* --- BANNIÈRE TITRE (Version Mobile par défaut) --- */
 .page-header {
     background: linear-gradient(to right, #000000, #333333);
-    padding: 60px 20px;
+    padding: 40px 15px; /* Marges réduites sur mobile */
     text-align: center;
     border-bottom: 1px solid #333;
 }
 
 .page-header h1 {
     font-family: 'Orbitron', sans-serif;
-    font-size: 2.5rem;
+    font-size: 1.8rem; /* Titre plus petit sur mobile */
     text-transform: uppercase;
-    letter-spacing: 3px;
+    letter-spacing: 2px;
     margin: 0;
+    line-height: 1.2;
 }
 
 .page-header p {
     color: #aaa;
     margin-top: 10px;
-    font-size: 1.1rem;
+    font-size: 0.9rem;
 }
 
-/* --- GRILLE PRODUITS (MODIFIÉE POUR 4 COLONNES) --- */
+/* --- CONTENEUR PRINCIPAL --- */
 .products-container {
-    max-width: 1600px; /* On élargit un peu pour que 4 produits rentrent bien */
-    margin: 50px auto;
-    padding: 0 20px;
+    width: 100%;
+    padding: 0 15px;     /* Marges latérales pour mobile */
+    margin: 30px auto;   /* Marges verticales réduites */
+    box-sizing: border-box;
 }
 
+/* --- GRILLE PRODUITS (1 Colonne par défaut pour Mobile) --- */
 .products-grid {
     display: grid;
-    /* C'est ici que la magie opère : 4 colonnes de même taille */
-    grid-template-columns: repeat(4, 1fr); 
-    gap: 20px; /* Espace un peu plus petit pour tout faire rentrer */
+    grid-template-columns: 1fr; /* 1 seule colonne qui prend toute la largeur */
+    gap: 20px;
 }
 
 /* --- CARTE PRODUIT --- */
@@ -51,16 +55,10 @@ body {
     flex-direction: column;
 }
 
-.product-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-    border-color: #fff;
-}
-
 /* Image */
 .card-img-top {
     width: 100%;
-    height: 250px; /* Un peu moins haut pour équilibrer */
+    height: 250px;
     object-fit: cover;
     background-color: #000;
     border-bottom: 1px solid #333;
@@ -68,45 +66,45 @@ body {
 
 /* Infos du produit */
 .card-body {
-    padding: 15px; /* Marges réduites */
+    padding: 15px;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
 }
 
 .product-title {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 700;
     margin-bottom: 5px;
     font-family: 'Poppins', sans-serif;
-    white-space: nowrap; /* Empêche le titre de passer à la ligne */
+    white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis; /* Met des "..." si c'est trop long */
+    text-overflow: ellipsis;
 }
 
 .product-brand {
     color: #888;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
     margin-bottom: 10px;
     letter-spacing: 1px;
 }
 
 .product-price {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: bold;
     color: #fff;
     margin-bottom: 15px;
 }
 
-/* --- SÉLECTEUR DE TAILLE & BOUTON --- */
+/* --- SÉLECTEUR & BOUTON --- */
 .product-form {
-    margin-top: auto;
+    margin-top: auto; /* Pousse le formulaire vers le bas */
 }
 
 .size-selector {
     width: 100%;
-    padding: 8px;
+    padding: 10px; /* Zone de touche plus grande pour le doigt */
     background-color: #000;
     color: #fff;
     border: 1px solid #444;
@@ -114,11 +112,12 @@ body {
     margin-bottom: 10px;
     font-family: 'Poppins', sans-serif;
     cursor: pointer;
+    font-size: 1rem; /* Texte lisible sur mobile */
 }
 
 .btn-add-cart {
     width: 100%;
-    padding: 12px;
+    padding: 14px; /* Bouton plus haut pour le tactile */
     background-color: #ffffff;
     color: #000000;
     border: none;
@@ -130,27 +129,50 @@ body {
     font-size: 0.9rem;
 }
 
-.btn-add-cart:hover {
-    background-color: #ccc;
-    color: #000;
-}
+/* On agrandit progressivement l'écran
 
-/* --- RESPONSIVE OBLIGATOIRE --- */
-/* Sur téléphone, 4 colonnes c'est illisible, donc on passe à 1 ou 2 */
-@media (max-width: 1200px) {
+/* Tablette (dès 600px de large) */
+@media (min-width: 600px) {
     .products-grid {
-        grid-template-columns: repeat(3, 1fr); /* 3 colonnes sur PC portable moyen */
+        grid-template-columns: repeat(2, 1fr); /* Passe à 2 colonnes */
     }
 }
 
-@media (max-width: 900px) {
+/* Petit PC / Tablette Paysage (dès 900px de large) */
+@media (min-width: 900px) {
     .products-grid {
-        grid-template-columns: repeat(2, 1fr); /* 2 colonnes sur tablette */
+        grid-template-columns: repeat(3, 1fr); /* Passe à 3 colonnes */
+    }
+    
+    .page-header {
+        padding: 60px 20px;
+    }
+
+    .page-header h1 {
+        font-size: 2.5rem;
+    }
+    
+    .product-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        border-color: #fff;
+    }
+    
+    .btn-add-cart:hover {
+        background-color: #ccc;
+        color: #000;
     }
 }
 
-@media (max-width: 600px) {
+/* Grand Écran (dès 1200px de large) */
+@media (min-width: 1200px) {
+    .products-container {
+        max-width: 1600px;
+        padding: 0 20px;
+        margin: 50px auto;
+    }
+
     .products-grid {
-        grid-template-columns: 1fr; /* 1 colonne sur mobile */
+        grid-template-columns: repeat(4, 1fr); /* Passe à 4 colonnes comme demandé */
     }
 }

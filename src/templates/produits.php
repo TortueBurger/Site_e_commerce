@@ -3,55 +3,54 @@ ob_start();
 
 // 1. NOTRE BASE DE DONNÉES DE 8 PRODUITS (Images locales)
 $catalog = [
-    // --- LES 4 PRODUITS DE L'ACCUEIL ---
+    // --- LES 8 PRODUITS DE L'ACCUEIL ---
     1 => [
         'marque' => 'Nike',
-        'modele' => 'Air Max Red Edition',
+        'modele' => 'Air Max Blue Edition',
         'prix' => 129.99,
-        'img' => '../images/img1.jpg' // Image locale 1
+        'img' => '../images/img1.jpg' 
     ],
     2 => [
-        'marque' => 'Puma',
-        'modele' => 'RS-X Tech Black',
-        'prix' => 110.00,
-        'img' => '../images/img2.jpg' // Image locale 2
+        'marque' => 'Nike',
+        'modele' => 'Shox Black',
+        'prix' => 170.00,
+        'img' => '../images/img2.jpg' 
     ],
     3 => [
-        'marque' => 'New Balance',
-        'modele' => '530 Retro White',
-        'prix' => 120.00,
-        'img' => '../images/img3.jpg' // Image locale 3
+        'marque' => 'Nike',
+        'modele' => 'Nocta White',
+        'prix' => 220.00,
+        'img' => '../images/img3.jpg' 
     ],
     4 => [
-        'marque' => 'Vans',
-        'modele' => 'Old Skool Classic',
-        'prix' => 75.00,
-        'img' => '../images/img4.jpg' // Image locale 4
+        'marque' => 'nike',
+        'modele' => 'Mind',
+        'prix' => 120.00,
+        'img' => '../images/img4.jpg' 
     ],
-    // --- LES 4 NOUVEAUX PRODUITS (À toi de mettre les images !) ---
     5 => [
-        'marque' => 'Adidas',
-        'modele' => 'Yeezy Boost Style',
-        'prix' => 220.00,
-        'img' => '../images/img5.jpg' // Tu dois créer cette image
+        'marque' => 'nike',
+        'modele' => 'cactus jack',
+        'prix' => 300.00,
+        'img' => '../images/img5.jpg' 
     ],
     6 => [
         'marque' => 'Jordan',
-        'modele' => 'Retro High OG',
+        'modele' => 'Jordan 4 Retro Red Thunder',
         'prix' => 180.00,
-        'img' => '../images/img6.jpg' // Tu dois créer cette image
+        'img' => '../images/img6.jpg' 
     ],
     7 => [
-        'marque' => 'Asics',
-        'modele' => 'Gel-Lyte III Urban',
-        'prix' => 135.00,
-        'img' => '../images/img7.jpg' // Tu dois créer cette image
+        'marque' => 'Nike',
+        'modele' => 'Tuned 1 rose ',
+        'prix' => 185.00,
+        'img' => '../images/img7.jpg' 
     ],
     8 => [
-        'marque' => 'Reebok',
-        'modele' => 'Club C 85 Vintage',
-        'prix' => 95.00,
-        'img' => '../images/img8.jpg' // Tu dois créer cette image
+        'marque' => 'Adidas',
+        'modele' => 'Yeezy Boost 350',
+        'prix' => 150.00,
+        'img' => '../images/img8.jpg' 
     ]
 ];
 ?>
@@ -90,6 +89,10 @@ $catalog = [
                                 <option value="42">42</option>
                                 <option value="43">43</option>
                                 <option value="44">44</option>
+                                <option value="45">45</option>
+                                <option value="46">46</option>
+                                <option value="47">47</option>
+
                             </select>
 
                             <button type="submit" class="btn-add-cart">

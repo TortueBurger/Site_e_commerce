@@ -33,36 +33,6 @@ ob_start();
         </div>
     </section>
 
-    <section class="gallery-section">
-        <div class="gallery-item">
-            <img src="../images/img1.jpg" alt="Urban Style">
-            <div class="gallery-overlay">
-                <span class="overlay-text">Iconic Jordan</span>
-            </div>
-        </div>
-
-        <div class="gallery-item">
-            <img src="../images/img2.jpg" alt="Nike Jordan">
-            <div class="gallery-overlay">
-                <span class="overlay-text">Shox</span>
-            </div>
-        </div>
-
-        <div class="gallery-item">
-            <img src="../images/img3.jpg" alt="Sneaker Collection">
-            <div class="gallery-overlay">
-                <span class="overlay-text">Nocta</span>
-            </div>
-        </div>
-
-        <div class="gallery-item">
-            <img src="../images/img4.jpg" alt="Streetwear">
-            <div class="gallery-overlay">
-                <span class="overlay-text">Mind</span>
-            </div>
-        </div>
-    </section>
-
     <section class="final-cta">
         <h2>Prêt à trouver votre paire ?</h2>
         <p style="margin-bottom: 30px; color: #666;">Parcourez notre catalogue complet et faites votre choix.</p>

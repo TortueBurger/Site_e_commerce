@@ -9,14 +9,14 @@ if (session_status() === PHP_SESSION_NONE) {
 // -------------------------------------------------------------------
 $products_db = [
     1 => [
-        'name' => 'Nike Air Max Red',
+        'name' => 'Air Max Blue Edition',
         'price' => 129.99,
-        'img' => 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
+        'img' => '../images/img1.jpg'
     ],
     2 => [
-        'name' => 'Puma RS-X Black',
-        'price' => 110.00,
-        'img' => 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
+        'name' => 'Nike Shox Black',
+        'price' => 170.00,
+        'img' => '../images/img2.jpg'
     ],
     3 => [
         'name' => 'Air Jordan High',
