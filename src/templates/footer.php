@@ -13,7 +13,7 @@
           <div class="logo-link">
     <img src="../images/logo_ecommerce.png" 
          alt="Logo Kickstep" 
-         style="height: 50px; width: auto; filter: invert(1); mix-blend-mode: screen;">
+         style="height: 100px; width: auto; filter: invert(1); mix-blend-mode: screen;">
 </div>
             <p class="footer-desc">
                 La référence du style urbain. Qualité premium et designs exclusifs pour votre garde-robe.
