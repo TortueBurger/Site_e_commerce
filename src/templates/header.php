@@ -13,7 +13,7 @@
         </div>
         
         <div class="header-main">                
-            <a href="accueil.php" style="text-decoration: none; display: flex; align-items: center; color: inherit;">
+            <a href="../pages/homepage.php" style="text-decoration: none; display: flex; align-items: center; color: inherit;">
                 <img src="../images/logo_ecommerce.png" 
                      alt="Logo Kickstep" 
                      class="logo-img"
@@ -23,10 +23,10 @@
 
             <nav>
                 <ul class="nav-main">
-                    <li><a href="accueil.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'accueil.php' ? 'active' : ''; ?>">Accueil</a></li>
-                    <li><a href="produits.php">Produits</a></li>
-                    <li><a href="nouveautes.php">Nouveautés</a></li>
-                    <li><a href="contact.php">Contact</a></li>
+                    <li><a href="../pages/homepage.php" class="<?php echo basename($_SERVER['PHP_SELF']) == '../pages/homepage.php' ? 'active' : ''; ?>">Accueil</a></li>
+                    <li><a href="../pages/produits.php">Produits</a></li>
+                    <li><a href="../pages/nouveautes.php">Nouveautés</a></li>
+                    <li><a href="../pages/contact.php">Contact</a></li>
                 </ul>
             </nav>
             
@@ -39,7 +39,7 @@
                     <input type="text" placeholder="Rechercher...">
                 </div>
                 
-                    <button class="icon-btn" title="Mon compte" onclick='window.location.replace("../pages/register.php")'>
+                    <button class="icon-btn" title="Mon compte" onclick='window.location.replace("../pages/login.php")'>
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                         <circle cx="12" cy="7" r="4"></circle>
