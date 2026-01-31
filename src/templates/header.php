@@ -26,7 +26,6 @@
                     <li><a href="../pages/homepage.php" class="<?php echo basename($_SERVER['PHP_SELF']) == '../pages/homepage.php' ? 'active' : ''; ?>">Accueil</a></li>
                     <li><a href="../pages/produits.php">Produits</a></li>
                     <li><a href="../pages/nouveautes.php">Nouveautés</a></li>
-                    <li><a href="../pages/contact.php">Contact</a></li>
                 </ul>
             </nav>
             
