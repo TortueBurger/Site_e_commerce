@@ -3,6 +3,8 @@ ob_start();
 require_once('../database/create_database.php');
 require_once('../database/create_tables.php');
 require_once('../management/login_request.php');
+require_once('../management/order_gestion.php');
+add_to_order(1, 2); // Example call to add item with ID 2 to user with ID 1
 ?>
     <div class=main">
         <h2>Inscription</h2>
