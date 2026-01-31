@@ -2,6 +2,11 @@
 ob_start();
 require_once('../database/create_database.php');
 require_once('../database/create_tables.php');
+<<<<<<< HEAD
+require_once('../management/login_request.php');
+require_once('../management/order_gestion.php');
+add_to_order(1, 2); // Example call to add item with ID 2 to user with ID 1
+=======
 require_once('../management/register_request.php');
 
 if (isset($_SESSION["name"])){
@@ -21,6 +26,7 @@ function show_mail_error_message(){
     }
 }
 
+>>>>>>> 6626884a079a4c7deffd85a804ec564054cbf8f7
 ?>
     <div class=main">
         <h2>Inscription</h2>
