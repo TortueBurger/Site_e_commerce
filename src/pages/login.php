@@ -4,6 +4,7 @@ require_once('../database/create_database.php');
 require_once('../database/create_tables.php');
 require_once('../management/order_gestion.php');
 require_once('../management/register_request.php');
+require_once('../management/product_management.php');
 
 if (isset($_SESSION["name"])){
     echo $_SESSION["name"];
