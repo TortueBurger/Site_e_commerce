@@ -7,7 +7,7 @@ require_once '../database/create_tables.php';
 session_start();
 
 if (isset($_SESSION["name"])){
-    echo "<br> Connected User: ".$_SESSION["name"];
+    echo "<br> Connected User: ".$_SESSION["id"];
 }
 
 ?>

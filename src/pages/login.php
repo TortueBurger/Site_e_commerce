@@ -1,9 +1,7 @@
 <?php 
 ob_start();
-require_once('../database/create_database.php');
-require_once('../database/create_tables.php');
 require_once('../management/order_gestion.php');
-require_once('../management/register_request.php');
+require_once('../management/login_request.php');
 
 if (isset($_SESSION["name"])){
     echo $_SESSION["name"];
@@ -25,10 +23,8 @@ function show_error_message(){
 
 ?>
     <div class="main">
-        <h2>Inscription</h2>
+        <h2>Connexion</h2>
         <form action="../pages/login.php" method="POST">
-            <label>Username :</label><br>
-            <input type="text" name="username" maxlength="16" required><br><br>
 
             <label>Email :</label><br>
             <input type="email" name="email" required><br>

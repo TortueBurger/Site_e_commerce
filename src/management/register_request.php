@@ -66,7 +66,8 @@ function add_user(){
 
     // Use previous sql command in the database
     if ($connection -> query($sql) == TRUE){
-        start_session($name, $email);
+        $id = $connection->insert_id;
+        start_session($name, $email, $id);
     // Error
     } else{
         echo $connection -> error;
@@ -75,9 +76,10 @@ function add_user(){
 }
 
 // Starts a new session with the user data
-function start_session($name, $email){
+function start_session($name, $email, $id){
     session_start();
     $_SESSION["name"] = $name;
+    $_SESSION["id"] = $id;
     $_SESSION["email"] = $email;
     header('Location: ../pages/homepage.php');
     exit();

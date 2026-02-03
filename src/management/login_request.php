@@ -41,14 +41,14 @@ function get_user_with_mail(){
     global $email, $connection, $password;
 
     // Find user in database
-    $sql = "SELECT name, email, password from users WHERE email = '$email'";
+    $sql = "SELECT name, email, password, id from users WHERE email = '$email'";
     $result = mysqli_query($connection, $sql);
 
     // Result
     if (mysqli_num_rows($result) > 0){
         while($row = $result->fetch_assoc()){
             if ($email == $row["email"]){
-                check_password($email, $password, $row["password"], $row["name"]);
+                check_password($email, $password, $row["password"], $row["name"], $row["id"]);
             }
         }
     } else{
@@ -57,19 +57,20 @@ function get_user_with_mail(){
 
 }
 
-function check_password($email, $password, $password_hash, $name){
+function check_password($email, $password, $password_hash, $name, $id){
     if (password_verify($password, $password_hash)){
-        start_session($name, $email);
+        start_session($name, $email, $id);
     } else{
         header('Location: ../pages/login.php?error=1');
     }
 }
 
 // Starts a new session with the user data
-function start_session($name, $email){
+function start_session($name, $email, $id){
     session_start();
     $_SESSION["name"] = $name;
     $_SESSION["email"] = $email;
+    $_SESSION["id"] = $id;
     header('Location: ../pages/homepage.php');
     exit();
 }

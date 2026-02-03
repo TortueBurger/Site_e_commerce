@@ -1,6 +1,7 @@
 <?php
 require_once('../config/config.php');
 $connection = new mysqli(SERVER_NAME, SERVER_USERNAME, SERVER_PASSWORD, DB_NAME);
+
 function add_to_order($user_id, $item_id) {
     global $connection;
 
@@ -32,6 +33,7 @@ function add_to_order($user_id, $item_id) {
     }
 }
 
+// Return a list with all the items id of a user
 function get_order_items($user_id) {
     global $connection;
     $statment = $connection->prepare("SELECT list_items FROM orders WHERE user_id = ?");
@@ -85,4 +87,25 @@ function proceed_order($user_id, $amount, $facturation_address, $city, $postal_c
         echo "No items in order.";
     }
     clear_order($user_id);
+}
+
+// Get item data from database
+function get_item($item_id){
+    global $connection;
+    $item = array();
+    $sql = "SELECT name, marque, description, price, image_url 
+            FROM items 
+            WHERE id = '$item_id'";
+    $result = mysqli_query($connection, $sql);
+    if ($result->num_rows > 0){
+        $row = $result->fetch_assoc();
+        $item = array(
+            "name" => $row["name"],
+            "marque" => $row["marque"],
+            "description" => $row["description"],
+            "price" => $row["price"],
+            "image_url" => $row["image_url"]
+        );
+    }
+    return $item;
 }

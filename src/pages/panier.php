@@ -4,6 +4,8 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+require_once("../management/order_gestion.php");
+
 // -------------------------------------------------------------------
 // 1. FAUSSE BASE DE DONNÉES (Pour simuler tes produits)
 // -------------------------------------------------------------------
@@ -33,37 +35,26 @@ $products_db = [
 // -------------------------------------------------------------------
 // 2. TRAITEMENT : AJOUT AU PANIER
 // -------------------------------------------------------------------
-// Si on reçoit un ID dans l'URL (ex: panier.php?id=1)
-if (isset($_GET['id'])) {
-    $id = (int)$_GET['id'];
-    
-    // Si le panier n'existe pas encore, on le crée
-    if (!isset($_SESSION['panier'])) {
-        $_SESSION['panier'] = [];
-    }
 
-    // On ajoute le produit ou on augmente la quantité
-    if (isset($_SESSION['panier'][$id])) {
-        $_SESSION['panier'][$id]++;
-    } else {
-        $_SESSION['panier'][$id] = 1;
-    }
 
-    // On redirige vers panier.php (sans l'ID) pour éviter de rajouter
-    // le produit si l'utilisateur actualise la page (F5)
-    header('Location: panier.php');
-    exit();
+// Get Session ID 
+if (isset($_SESSION["id"])){
+    $id = $_SESSION["id"];
+    // add_to_order($id, 1);
+    $orders = get_order_items($id);
+    $stats = array_count_values($orders);
 }
+
 
 // -------------------------------------------------------------------
 // 3. TRAITEMENT : SUPPRIMER UN ARTICLE
 // -------------------------------------------------------------------
-if (isset($_GET['del'])) {
-    $id_del = (int)$_GET['del'];
-    unset($_SESSION['panier'][$id_del]);
-    header('Location: panier.php');
-    exit();
-}
+// if (isset($_GET['del'])) {
+//     $id_del = (int)$_GET['del'];
+//     unset($_SESSION['panier'][$id_del]);
+//     header('Location: panier.php');
+//     exit();
+// }
 
 // Début du buffer pour le template layout
 ob_start();
@@ -78,7 +69,7 @@ ob_start();
 
         <?php 
         // Si le panier est vide ou n'existe pas
-        if (empty($_SESSION['panier'])): ?>
+        if (empty($orders)): ?>
             <div class="empty-cart">
                 <p>Votre panier est vide pour le moment.</p>
                 <a href="accueil.php" class="btn-back">Retourner à la boutique</a>
@@ -87,20 +78,23 @@ ob_start();
             
             <?php 
             $total = 0;
-            // On parcourt le panier stocké en session
-            foreach ($_SESSION['panier'] as $id => $quantity): 
-                // On vérifie si l'ID existe dans notre "fausse base de données"
-                if (isset($products_db[$id])):
-                    $product = $products_db[$id];
-                    $subtotal = $product['price'] * $quantity;
-                    $total += $subtotal;
+            $seen = [];
+            foreach ($orders as $item_id):
+                if (in_array($item_id, $seen)){
+                    continue;
+                }
+                $item = get_item($item_id);
+                $seen[] = $item_id;
+                $i = array_keys($orders, $item_id);
+                $quantity = count($i);
+                $total += $item["price"]*$quantity;
             ?>
                 <div class="cart-item">
-                    <img src="<?= $product['img'] ?>" alt="<?= $product['name'] ?>">
+                    <img src="<?= $item['image_url'] ?>" alt="<?= $item['name'] ?>">
                     
                     <div class="item-details">
-                        <div class="item-title"><?= $product['name'] ?></div>
-                        <div class="item-price"><?= number_format($product['price'], 2) ?> €</div>
+                        <div class="item-title"><?= $item['name'] ?></div>
+                        <div class="item-price"><?= number_format($item['price'], 2) ?> €</div>
                     </div>
 
                     <div class="item-quantity">
@@ -111,14 +105,13 @@ ob_start();
                     <a href="panier.php?del=<?= $id ?>" class="btn-remove">Supprimer</a>
                 </div>
             <?php 
-                endif; 
-            endforeach; 
+                endforeach; 
             ?>
 
         <?php endif; ?>
     </div>
 
-    <?php if (!empty($_SESSION['panier'])): ?>
+    <?php if (!empty($orders)): ?>
     <div class="cart-summary">
         <div class="summary-title">Résumé</div>
         
@@ -138,7 +131,7 @@ ob_start();
 
         <a href="#" class="btn-checkout">Procéder au paiement</a>
         <div style="text-align:center; margin-top:10px;">
-            <a href="accueil.php" style="font-size:0.8rem; color:#666; text-decoration:none;">Continuer vos achats</a>
+            <a href="homepage.php" style="font-size:0.8rem; color:#666; text-decoration:none;">Continuer vos achats</a>
         </div>
     </div>
     <?php endif; ?>
