@@ -2,6 +2,7 @@
 ob_start();
 require_once('../management/order_gestion.php');
 require_once('../management/login_request.php');
+require_once('../management/product_management.php');
 
 if (isset($_SESSION["name"])){
     echo $_SESSION["name"];

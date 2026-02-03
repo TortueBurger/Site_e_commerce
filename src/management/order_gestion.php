@@ -109,3 +109,45 @@ function get_item($item_id){
     }
     return $item;
 }
+
+function remove_from_all_orders($item_id) {
+    global $connection;
+    $statment = $connection->prepare("SELECT user_id, list_items FROM orders");
+    $statment->execute();
+    $result = $statment->get_result();
+    while ($row = $result->fetch_assoc()) {
+        $user_id = $row['user_id'];
+        $items = explode(",", $row['list_items']);
+        if (in_array($item_id, $items)) {
+            $items = array_filter($items, function($id) use ($item_id) {
+                return $id != $item_id;
+            });
+            $new_list = implode(",", $items);
+            $update_stmt = $connection->prepare("UPDATE orders SET list_items = ? WHERE user_id = ?");
+            $update_stmt->bind_param("si", $new_list, $user_id);
+            $update_stmt->execute();
+        }
+    }
+}
+
+function remove_item_from_order($item_id, $user_id) {
+    global $connection;
+    $statment = $connection->prepare("SELECT user_id, list_items FROM orders WHERE user_id = ?");
+    $statment->bind_param("i", $user_id);
+    $statment->execute();
+    $result = $statment->get_result();
+    while ($row = $result->fetch_assoc()) {
+        $user_id = $row['user_id'];
+        $items = explode(",", $row['list_items']);
+        foreach ($items as $key => $id) {
+            if ($id == $item_id) {
+                unset($items[$key]);
+                $new_list = implode(",", $items);
+                $update_stmt = $connection->prepare("UPDATE orders SET list_items = ? WHERE user_id = ?");
+                $update_stmt->bind_param("si", $new_list, $user_id);
+                $update_stmt->execute();
+                break;
+            }
+        }
+    }
+}

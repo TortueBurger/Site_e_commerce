@@ -3,12 +3,20 @@ ob_start();
 
 require_once '../database/create_database.php';
 require_once '../database/create_tables.php';
+require_once '../management/order_gestion.php';
+require_once '../management/product_management.php';
 
 session_start();
 
 if (isset($_SESSION["name"])){
     echo "<br> Connected User: ".$_SESSION["id"];
 }
+
+add_to_order(1, 1);
+add_to_order(1, 1);
+add_to_order(1, 1);
+remove_item_from_order(1, 1);
+get_order_items(1);
 
 ?>
 
