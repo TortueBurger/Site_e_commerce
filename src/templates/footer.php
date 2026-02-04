@@ -58,8 +58,10 @@
     <div class="footer-bottom">
         <p>&copy; 2026 SHOP. Tous droits réservés.</p>
         <p>Paiement sécurisé : Visa • MasterCard • PayPal</p>
-        
-        <a href="../pages/admin_dashboard.php" class="admin-link">Admin Access</a>
+    
+        <?php if (isset($_SESSION["role"]) && $_SESSION["role"] == "admin"): ?>
+            <a href="../pages/admin_dashboard.php" class="admin-link">Admin Access</a>
+        <?php endif ?>
         </div>
 </footer>
 </body>

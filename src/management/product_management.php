@@ -75,6 +75,31 @@ function default_database(){
     } else {
         echo "Error inserting stock: " . $connection->error;
     }
+
+    $password = password_hash("password", PASSWORD_DEFAULT);
+    $sql = "INSERT INTO users (name, email, password, role) 
+    VALUES ('admin', 'admin@admin.admin', '$password', 'admin')";
+    
+    if ($connection -> query($sql) == TRUE){
+        return;
+    } else{
+        echo $connection -> error;
+    }
+
+}
+
+function get_item_stock($item_id){
+    global $connection;
+    $sql = "SELECT quantity_in_stocks FROM stock WHERE item_id = '$item_id'";
+    $result = mysqli_query($connection, $sql);
+    // Result
+    if (mysqli_num_rows($result) > 0){
+        while($row = $result->fetch_assoc()){
+            return $row["quantity_in_stocks"];
+        }
+    }
+    return 0;
+
 }
 
 ?>
