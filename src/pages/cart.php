@@ -40,7 +40,7 @@ if (isset($_SESSION["id"])){
         $orders = [];
     }
 }
-
+$deliver_fee = 10.00;
 
 ob_start();
 ?>
@@ -106,16 +106,16 @@ ob_start();
             </div>
             <div class="summary-row">
                 <span>Livraison</span>
-                <?php if ($total >= 200): ?>
+                <?php if ($total >= 200): $deliver_fee = 0;?>
                     <span>Gratuite</span>
-                <?php else: ?>
-                    <span>10.00 €</span>
+                <?php else: $deliver_fee = 10.00; ?>
+                    <span><?= number_format($deliver_fee, 2) ?> €</span>
             <?php endif; ?>
             </div>
             
             <div class="summary-total">
                 <span>TOTAL</span>
-                <span><?= number_format($total, 2) ?> €</span>
+                <span><?= number_format($total + $deliver_fee, 2) ?> €</span>
             </div>
 
             <form method="POST" action="commands.php">

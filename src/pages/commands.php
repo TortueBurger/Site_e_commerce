@@ -1,6 +1,12 @@
 <?php 
 ob_start();
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+require_once('../management/order_gestion.php');
+
 $address = $zipcode = $city = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -17,6 +23,11 @@ function process_input($data){
     return $data;
 }
 
+$user = get_user($_SESSION["id"]);
+$order_id = get_order_id($user["id"]);
+$order_items = get_order_items($user["id"]);
+$amount = get_total_amount($user["id"]);
+$deliver_fee = 10.00;
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -34,14 +45,14 @@ function process_input($data){
         
         <div class="success-header">
             <i class="fas fa-check-circle icon-check"></i>
-            <h1>Merci, Thomas !</h1>
-            <p class="subtitle">Votre commande <span class="order-id">#ORD-9928</span> a bien été reçue.</p>
+            <h1>Merci, <?= $user["name"] ?> !</h1>
+            <p class="subtitle">Votre commande <span class="order-id">#ORD-<?= $order_id ?></span> a bien été reçue.</p>
         </div>
 
         <div class="info-grid">
             <div class="info-box">
                 <h3>Adresse de livraison</h3>
-                <p>Thomas Anderson<br>
+                <?= $user["name"] ?><br>
                 <?= $address ?><br>
                 <?= $zipcode ?> <?= $city ?></p>
             </div>
@@ -59,43 +70,60 @@ function process_input($data){
                     <th style="text-align:right;">Prix</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <div class="product-col">
-                            <img src="https://via.placeholder.com/50" alt="Sneaker" class="thumb">
-                            <div>
-                                <span class="prod-name">Nike Air Jordan 1</span>
-                                <span class="prod-size">Taille : 43</span>
+            <?php 
+                $total = 0;
+            
+                foreach ($order_items as $item):
+                    $item_info = get_item($item['item_id']);
+                    $quantity = $item['quantity'];
+                    $total += $item_info["price"]*$quantity;
+                ?>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="product-col">
+                                <img src="<?= $item_info['image_url'] ?>" alt="<?= $item_info['name'] ?>" class="thumb">
+                                <div>
+                                    <span class="prod-name"><?= $item_info['name'] ?></span>
+                                    <span class="prod-size">Taille : <?= $item['size'] ?></span>
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                    <td style="text-align:center;">1</td>
-                    <td style="text-align:right;">180,00 €</td>
-                </tr>
-            </tbody>
+                        </td>
+                        <td style="text-align:center;"><?= $quantity ?></td>
+                        <td style="text-align:right;"><?= number_format($item_info['price'], 2) ?> €</td>
+                    </tr>
+                </tbody>
+            <?php endforeach; ?>
         </table>
 
         <div class="totals-section">
             <div class="total-row">
                 <span>Sous-total</span>
-                <span>204,00 €</span>
+                <span><?= number_format($total, 2) ?> €</span>
             </div>
             <div class="total-row">
                 <span>Livraison</span>
-                <span>Gratuite</span>
+                <?php if ($total >= 200): $deliver_fee = 0;?>
+                    <span>Gratuite</span>
+                <?php else: $deliver_fee = 10.00; ?>
+                    <span><?= number_format($deliver_fee, 2) ?> €</span>
+            <?php endif; ?>
             </div>
             <div class="total-row final">
                 <span>Total</span>
-                <span>180,00 €</span>
+                <span><?= number_format($amount + $deliver_fee, 2) ?> €</span>
             </div>
         </div>
 
-        <a href="produits.php" class="btn-home">Continuer mes achats</a>
+        <a href="products.php" class="btn-home">Continuer mes achats</a>
     </div>
 </div>
 </body>
 </html>
+<?php 
+$amount += $deliver_fee;
+proceed_order($user["id"],$amount, $address, $zipcode, $city);
+?>
 
 <?php $content = ob_get_clean(); ?>
 <?php require('../templates/layout.php') ?>
