@@ -28,7 +28,7 @@ function show_mail_error_message(){
             
             <form action="../pages/register.php" method="POST" class="login-form">
                 <div class="input-group">
-                    <input name="name" placeholder="Nom d'utilisateur" required>
+                    <input name="username" placeholder="Nom d'utilisateur" required>
                 </div>
             
                 <div class="input-group">

@@ -1,6 +1,11 @@
 <?php 
 ob_start(); 
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+
 $drops = [
     1 => [
         'modele' => 'KICKSTEP ONE - MIDNIGHT',
