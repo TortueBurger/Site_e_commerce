@@ -29,7 +29,7 @@ $catalog = get_all_items_infos();
 
 <!DOCTYPE html>
 <html lang="fr">
-<link rel="stylesheet" href="../css/produits.css">
+<link rel="stylesheet" href="../css/products.css">
 
     <div class="page-header">
         <h1>Notre Collection</h1>
@@ -54,7 +54,7 @@ $catalog = get_all_items_infos();
                             
                             <select name="size" class="size-selector" required>
                                 <option value="" disabled selected>Choisir une taille</option>
-                                <?php for($i=38; $i<=47; $i++): ?>
+                                <?php for($i=38; $i<=48; $i++): ?>
                                     <option value="<?= $i ?>"><?= $i ?></option>
                                 <?php endfor; ?>
                             </select>

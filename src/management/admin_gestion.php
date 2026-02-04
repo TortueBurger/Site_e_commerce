@@ -110,6 +110,7 @@ function update_item($item_id, $name, $brand, $price, $image_url, $quantity_in_s
 
 function delete_item($item_id) {
     global $connection;
+    remove_from_all_orders($item_id);
     // Prepare and bind
     $statment = $connection->prepare("DELETE FROM items WHERE id = ?");
     $statment->bind_param("i", $item_id);

@@ -47,7 +47,7 @@ ob_start();
 
 <div id="content">
     <div id="cart-container">
-        <link rel="stylesheet" href="../css/panier.css">
+        <link rel="stylesheet" href="../css/cart.css">
         <script src="../js/script.js"></script>
         <div class="cart-items">
             <h1>Votre Panier</h1>
@@ -118,7 +118,13 @@ ob_start();
                 <span><?= number_format($total, 2) ?> €</span>
             </div>
 
-            <a href="commandes.php" class="btn-checkout">Procéder au paiement</a>
+            <form method="POST" action="commands.php">
+                <input type="text" placeholder="Adresse..." name="address" required>
+                <input type="text" placeholder="Ville..." name="city" required>
+                <input type="text" placeholder="Code Postal..." name="zipcode" required>
+                <button type="submit" class="btn-checkout">Procéder au paiement</button>
+            </form>
+
             <div style="text-align:center; margin-top:10px;">
                 <a href="produits.php" style="font-size:0.8rem; color:#666; text-decoration:none;">Continuer vos achats</a>
             </div>
@@ -129,7 +135,6 @@ ob_start();
 </div>
 
 <?php 
-// Fin du contenu et appel du layout principal
 $content = ob_get_clean(); 
 
 if ($ajax){

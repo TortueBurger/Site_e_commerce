@@ -1,3 +1,23 @@
+<?php 
+ob_start();
+
+$address = $zipcode = $city = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
+    $address = process_input($_POST["address"]); 
+    $zipcode = process_input($_POST["zipcode"]); 
+    $city = process_input($_POST["city"]);
+}
+
+// Remove all special characters from the inputs for security
+function process_input($data){
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -6,10 +26,10 @@
     <title>Commande Confirmée - KICKSTEP</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/commandes.css">
+    <link rel="stylesheet" href="../css/commands.css">
 </head>
 <body>
-
+<div id="content">
     <div class="receipt-container">
         
         <div class="success-header">
@@ -22,8 +42,8 @@
             <div class="info-box">
                 <h3>Adresse de livraison</h3>
                 <p>Thomas Anderson<br>
-                12 rue de la Matrice<br>
-                75001 Paris, France</p>
+                <?= $address ?><br>
+                <?= $zipcode ?> <?= $city ?></p>
             </div>
             <div class="info-box">
                 <h3>Mode de paiement</h3>
@@ -73,6 +93,9 @@
 
         <a href="produits.php" class="btn-home">Continuer mes achats</a>
     </div>
-
+</div>
 </body>
 </html>
+
+<?php $content = ob_get_clean(); ?>
+<?php require('../templates/layout.php') ?>

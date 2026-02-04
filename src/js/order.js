@@ -4,7 +4,6 @@ function envoyerAuPanier(bouton) {
     const toast_select_size = document.getElementById("toast-select-size");
 
     const parentForm = bouton.closest('.product-form');
-    // CORRECTION : on cherche 'size' et non 'taille'
     const sizeSelect = parentForm ? parentForm.querySelector('select[name="size"]') : null;
 
     if (sizeSelect) {
@@ -18,10 +17,9 @@ function envoyerAuPanier(bouton) {
             return;
         }
 
-        fetch('produits.php', { 
+        fetch('products.php', { 
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            // CORRECTION : on envoie 'size' pour correspondre au PHP
             body: 'id_produit=' + encodeURIComponent(idProduit) + '&size=' + encodeURIComponent(selectedSize)
         })
         .then(response => response.text())

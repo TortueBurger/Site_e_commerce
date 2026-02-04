@@ -23,7 +23,7 @@ $drops = [
 ?>
 
 <!DOCTYPE html>
-<link rel="stylesheet" href="../css/nouveautes.css">
+<link rel="stylesheet" href="../css/drop.css">
 
 <div class="drop-container">
     

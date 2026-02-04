@@ -1,7 +1,7 @@
 // AJAX Panier
 function load_data_orders(extra) {
     // Debug
-    const url = '../pages/panier.php?ajax=1&' + extra;
+    const url = '../pages/cart.php?ajax=1&' + extra;
     console.log("URL envoyée au serveur :", url);
     
     fetch(url)

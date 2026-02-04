@@ -7,7 +7,7 @@ function handleAccountRedirect(button) {
     const isLoggedIn = button.getAttribute('data-logged-in') === 'true';
 
     if (isLoggedIn) {
-        window.location.href = "../pages/profil.php";
+        window.location.href = "../pages/profile.php";
     } else {
         window.location.href = "../pages/login.php";
     }

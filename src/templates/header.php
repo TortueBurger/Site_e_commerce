@@ -24,8 +24,8 @@
             <nav>
                 <ul class="nav-main">
                     <li><a href="../pages/homepage.php" class="<?php echo basename($_SERVER['PHP_SELF']) == '../pages/homepage.php' ? 'active' : ''; ?>">Accueil</a></li>
-                    <li><a href="../pages/produits.php">Produits</a></li>
-                    <li><a href="../pages/nouveautes.php">Nouveautés</a></li>
+                    <li><a href="../pages/products.php">Produits</a></li>
+                    <li><a href="../pages/drop.php">Nouveautés</a></li>
                 </ul>
             </nav>
             
@@ -41,7 +41,7 @@
                     </svg>
                 </button>
                 
-                <a href="panier.php" class="icon-btn" title="Panier" style="text-decoration: none; color: inherit; display: inline-flex; align-items: center;">
+                <a href="cart.php" class="icon-btn" title="Panier" style="text-decoration: none; color: inherit; display: inline-flex; align-items: center;">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <circle cx="9" cy="21" r="1"></circle>
                         <circle cx="20" cy="21" r="1"></circle>

@@ -15,7 +15,7 @@ if (isset($_GET["main"]) && isset($_GET["main"]) == 1){
 
 ?>
 
-<link rel="stylesheet" href="../css/accueil.css">
+<link rel="stylesheet" href="../css/homepage.css">
 
     <section class="hero">
         <div class="hero-content">
