@@ -3,11 +3,12 @@ require_once('../config/config.php');
 $connection = new mysqli(SERVER_NAME, SERVER_USERNAME, SERVER_PASSWORD, DB_NAME);
 
 //Return all items in database in a dictionary
-function get_all_items() {
+function get_all_items_infos() {
     global $connection;
     $items = [];
-    $sql = "SELECT items.id, items.name, items.brand, items.price, items.image_url
-            FROM items ";
+    $sql = "SELECT items.id, items.name, items.brand, items.price, items.image_url, stock.quantity_in_stocks
+            FROM items 
+            JOIN stock ON items.id = stock.item_id";
     $result = $connection->query($sql);
 
     if ($result->num_rows > 0) {
@@ -16,6 +17,57 @@ function get_all_items() {
             $items[] = $row;
     }
     return $items;
+    }
+}
+
+
+function default_database(){
+    global $connection;
+    // Prepare and bind
+    $statment = $connection->prepare("INSERT INTO items (name, brand, price, image_url) VALUES (?, ?, ?, ?), (?, ?, ?, ?), (?, ?, ?, ?);");
+
+    $name = "Air max";
+    $brand = "Nike";
+    $price = 120;
+    $image_url = "../images/img1.jpg";
+
+    $name2 = "Shox Black";
+    $brand2 = "Nike";
+    $price2 = 150;
+    $image_url2 = "../images/img2.jpg";
+
+    $name3 = "Nocta white";
+    $brand3 = "Nike";
+    $price3 = 80;
+    $image_url3 = "../images/img3.jpg";
+ 
+
+   
+
+    $statment->bind_param("ssdsssdsssds", $name, $brand, $price, $image_url, 
+        $name2, $brand2, $price2, $image_url2,
+        $name3, $brand3, $price3, $image_url3,);
+
+    if ($statment->execute()) {
+        echo "Item inserted successfully.";
+    } else {
+        echo "Error inserting item: " . $connection->error;
+    }
+
+    $statment = $connection->prepare("INSERT INTO stock (item_id, quantity_in_stocks) VALUES (?, ?), (?, ?), (?, ?);");
+
+    $idtem_id1 = 1;
+    $quantity_in_stocks1 = 50;
+    $idtem_id2 = 2;
+    $quantity_in_stocks2 = 30;
+    $idtem_id3 = 3;
+    $quantity_in_stocks3 = 0;
+    
+    $statment->bind_param("ssssss", $idtem_id1, $quantity_in_stocks1, $idtem_id2, $quantity_in_stocks2, $idtem_id3, $quantity_in_stocks3);
+    if ($statment->execute()) {
+        echo "Stock inserted successfully.";
+    } else {
+        echo "Error inserting stock: " . $connection->error;
     }
 }
 

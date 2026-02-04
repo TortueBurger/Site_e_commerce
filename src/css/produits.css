@@ -115,18 +115,27 @@ body {
     font-size: 1rem; /* Texte lisible sur mobile */
 }
 
+/* Le design commun à TOUS les boutons */
 .btn-add-cart {
     width: 100%;
-    padding: 14px; /* Bouton plus haut pour le tactile */
+    padding: 14px;
     background-color: #ffffff;
     color: #000000;
-    border: none;
+    border: 1px solid #000; /* Ajout d'une bordure si fond blanc */
     font-weight: 800;
     text-transform: uppercase;
     cursor: pointer;
     transition: all 0.3s ease;
     letter-spacing: 1px;
     font-size: 0.9rem;
+}
+
+/* Les spécificités quand c'est hors stock */
+.btn-out-of-stock {
+    color: #ac0e0e !important;
+    border-color: #ac0e0e;
+    cursor: not-allowed;
+    opacity: 0.7;
 }
 
 /* On agrandit progressivement l'écran
@@ -157,11 +166,12 @@ body {
         box-shadow: 0 10px 20px rgba(0,0,0,0.5);
         border-color: #fff;
     }
-    
+
     .btn-add-cart:hover {
         background-color: #ccc;
         color: #000;
     }
+   
 }
 
 /* Grand Écran (dès 1200px de large) */
@@ -175,4 +185,42 @@ body {
     .products-grid {
         grid-template-columns: repeat(4, 1fr); /* Passe à 4 colonnes comme demandé */
     }
+}
+
+
+#toast-notification {
+    visibility: hidden;
+    min-width: 250px;
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1000;
+    left: 50%;
+    /* On change bottom par top */
+    top: 30px; 
+    transform: translateX(-50%);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+
+#toast-notification.show {
+    visibility: visible;
+    /* L'animation dure 1.5s au total */
+    /* slideDown (0.3s) + attente + slideUp (0.3s démarrant à 1.2s) */
+    animation: slideDown 0.3s ease-out, slideUp 0.3s ease-in 1.2s forwards;
+}
+
+@keyframes slideDown {
+    from { top: -60px; opacity: 0; }
+    to { top: 20px; opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { top: 20px; opacity: 1; }
+    to { top: -60px; opacity: 0; }
 }

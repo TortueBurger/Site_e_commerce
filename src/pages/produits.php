@@ -1,9 +1,30 @@
 <?php 
 ob_start();
 
-// 1. NOTRE BASE DE DONNÉES DE 8 PRODUITS (Images locales)
-$catalog = [
+require_once '../management/product_management.php';
+require_once '../management/order_gestion.php';
+
+
+if (isset($_SESSION["id"])){
+    $id = $_SESSION["id"];
+}
+
+
+if (isset($_POST['id_produit'])) {
+    // Sécurisation de la donnée (on force un nombre entier)
+    $id_item = intval($_POST['id_produit']);
+    
+    // Exécution de ta fonction
+    if (add_to_order(1, $id_item)) {
+        // Ce "echo" sera capturé par le .then(message => alert(message)) du JS
+        echo "Le produit n°" . $id_item . " a bien été ajouté à votre commande.";
+    }
+    exit;
+}
+
+$catalog = get_all_items_infos();
     // --- LES 8 PRODUITS DE L'ACCUEIL ---
+    /*
     1 => [
         'marque' => 'Nike',
         'modele' => 'Air Max Blue Edition',
@@ -52,7 +73,8 @@ $catalog = [
         'prix' => 150.00,
         'img' => '../images/img8.jpg' 
     ]
-];
+        */
+
 ?>
 
 <!DOCTYPE html>
@@ -70,12 +92,12 @@ $catalog = [
             <?php foreach($catalog as $id => $produit): ?>
                 
                 <div class="product-card">
-                    <img src="<?= $produit['img'] ?>" alt="<?= $produit['modele'] ?>" class="card-img-top">
+                    <img src="<?= $produit['image_url'] ?>" alt="<?= $produit['name'] ?>" class="card-img-top">
                     
                     <div class="card-body">
-                        <div class="product-brand"><?= $produit['marque'] ?></div>
-                        <div class="product-title"><?= $produit['modele'] ?></div>
-                        <div class="product-price"><?= number_format($produit['prix'], 2) ?> €</div>
+                        <div class="product-brand"><?= $produit['brand'] ?></div>
+                        <div class="product-title"><?= $produit['name'] ?></div>
+                        <div class="product-price"><?= number_format($produit['price'], 2) ?> €</div>
                         
                         <form action="panier.php" method="GET" class="product-form">
                             <input type="hidden" name="id" value="<?= $id ?>">
@@ -94,10 +116,19 @@ $catalog = [
                                 <option value="47">47</option>
 
                             </select>
-
-                            <button type="submit" class="btn-add-cart">
-                                Ajouter au panier
-                            </button>
+                            <?php if ($produit['quantity_in_stocks'] > 0): ?>
+                                <button type="button" 
+                                        class="btn-add-cart" 
+                                        data-id="<?php echo $produit['id']; ?>" 
+                                        onclick="envoyerAuPanier(this)">
+                                    Ajouter au panier
+                                </button>
+                            <?php else: ?>
+                                <button type="submit" class="btn-add-cart btn-out-of-stock" disabled>
+                                    Plus de Stock
+                                </button>
+                            <?php endif; ?>
+                            
                         </form>
 
                     </div>
@@ -107,6 +138,8 @@ $catalog = [
 
         </div>
     </div>
+    <div id="toast-notification">✅ Article ajouté au panier</div>
+    <script src="../js/order.js"></script>
 
 <?php $content = ob_get_clean(); ?>
 <?php require('../templates/layout.php') ?>
