@@ -12,12 +12,6 @@ if (isset($_SESSION["name"])){
     echo "<br> Connected User: ".$_SESSION["id"];
 }
 
-add_to_order(1, 1);
-add_to_order(1, 1);
-add_to_order(1, 1);
-remove_item_from_order(1, 1);
-get_order_items(1);
-
 ?>
 
 <link rel="stylesheet" href="../css/accueil.css">
