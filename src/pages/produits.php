@@ -20,7 +20,7 @@ if (isset($_POST['id_produit'], $_POST['size']) && isset($_SESSION["id"])) {
     } else {
         echo "échec";
     }
-    exit;
+    exit; // INDISPENSABLE
 }
 
 $catalog = get_all_items_infos();

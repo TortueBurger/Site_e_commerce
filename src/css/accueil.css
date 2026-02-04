@@ -1,7 +1,5 @@
-/* --- HERO SECTION (Bannière principale) --- */
 .hero {
-    height: 80vh; 
-    /* Image de fond haute qualité (Unsplash) */
+    height: 80vh;
     background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1552346154-21d32810aba3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
     background-size: cover;
     background-position: center;
@@ -32,7 +30,6 @@
     font-weight: 300;
 }
 
-/* Bouton principal */
 .btn-cta {
     padding: 15px 50px;
     background-color: #fff;
@@ -52,7 +49,6 @@
     transform: translateY(-5px);
 }
 
-/* --- SECTION TEXTE (Concept) --- */
 .concept-section {
     padding: 100px 20px;
     background-color: #111;
@@ -90,45 +86,37 @@
     margin-bottom: 20px;
 }
 
-/* --- GALERIE PHOTO (Modifiée pour petites images) --- */
 .gallery-section {
     display: grid;
-    /* On réduit la taille minimale des colonnes */
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 15px;
     padding: 20px;
-    background-color: #0a0a0a; /* Fond quasi noir */
+    background-color: #0a0a0a;
 }
 
 .gallery-item {
     position: relative;
-    height: 300px; /* Hauteur réduite */
+    height: 300px;
     overflow: hidden;
     cursor: pointer;
-    background-color: #000; /* Fond noir derrière l'image */
-    border-radius: 8px; /* Coins arrondis sympa */
+    background-color: #000;
+    border-radius: 8px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .gallery-item img {
-    /* MODIFICATION CLÉ : On n'étire plus l'image */
-    width: auto;  /* Largeur naturelle */
-    height: auto; /* Hauteur naturelle */
-    max-width: 100%; /* Ne dépasse pas le cadre */
-    max-height: 100%; /* Ne dépasse pas le cadre */
-    object-fit: contain; /* L'image entière est visible sans déformation */
-    
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
     transition: transform 0.5s ease;
-    /* On enlève le grayscale pour garder les couleurs vives */
-    /* filter: grayscale(30%); */ 
 }
 
-/* Effets au survol */
 .gallery-item:hover img {
-    transform: scale(1.05); /* Zoom plus léger */
-    /* filter: grayscale(0%); */
+    transform: scale(1.05);
 }
 
 .gallery-overlay {
@@ -137,7 +125,6 @@
     left: 0;
     width: 100%;
     padding: 15px;
-    /* Dégradé plus sombre pour la lisibilité */
     background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
     color: white;
     opacity: 0;
@@ -157,7 +144,6 @@
     letter-spacing: 1px;
 }
 
-/* --- SECTION FINALE --- */
 .final-cta {
     padding: 80px 20px;
     background-color: #ffffff;
@@ -187,10 +173,9 @@
     background-color: #333;
 }
 
-/* Responsive Mobile */
 @media (max-width: 768px) {
     .hero h1 { font-size: 2.5rem; }
     .hero p { font-size: 1rem; }
     .concept-section { padding: 60px 20px; }
-    .gallery-item { height: 250px; } /* Encore plus petit sur mobile */
+    .gallery-item { height: 250px; }
 }

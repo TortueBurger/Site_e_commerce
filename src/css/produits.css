@@ -1,22 +1,20 @@
-/* --- GLOBAL --- */
 body {
     background-color: #121212;
     color: #ffffff;
-    margin: 0; /* Important pour éviter les marges par défaut */
-    font-family: 'Poppins', sans-serif; /* Police par défaut */
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
 }
 
-/* --- BANNIÈRE TITRE (Version Mobile par défaut) --- */
 .page-header {
     background: linear-gradient(to right, #000000, #333333);
-    padding: 40px 15px; /* Marges réduites sur mobile */
+    padding: 40px 15px;
     text-align: center;
     border-bottom: 1px solid #333;
 }
 
 .page-header h1 {
     font-family: 'Orbitron', sans-serif;
-    font-size: 1.8rem; /* Titre plus petit sur mobile */
+    font-size: 1.8rem;
     text-transform: uppercase;
     letter-spacing: 2px;
     margin: 0;
@@ -29,22 +27,19 @@ body {
     font-size: 0.9rem;
 }
 
-/* --- CONTENEUR PRINCIPAL --- */
 .products-container {
     width: 100%;
-    padding: 0 15px;     /* Marges latérales pour mobile */
-    margin: 30px auto;   /* Marges verticales réduites */
+    padding: 0 15px;
+    margin: 30px auto;
     box-sizing: border-box;
 }
 
-/* --- GRILLE PRODUITS (1 Colonne par défaut pour Mobile) --- */
 .products-grid {
     display: grid;
-    grid-template-columns: 1fr; /* 1 seule colonne qui prend toute la largeur */
+    grid-template-columns: 1fr;
     gap: 20px;
 }
 
-/* --- CARTE PRODUIT --- */
 .product-card {
     background-color: #1e1e1e;
     border-radius: 10px;
@@ -55,7 +50,6 @@ body {
     flex-direction: column;
 }
 
-/* Image */
 .card-img-top {
     width: 100%;
     height: 250px;
@@ -64,7 +58,6 @@ body {
     border-bottom: 1px solid #333;
 }
 
-/* Infos du produit */
 .card-body {
     padding: 15px;
     display: flex;
@@ -97,14 +90,13 @@ body {
     margin-bottom: 15px;
 }
 
-/* --- SÉLECTEUR & BOUTON --- */
 .product-form {
-    margin-top: auto; /* Pousse le formulaire vers le bas */
+    margin-top: auto;
 }
 
 .size-selector {
     width: 100%;
-    padding: 10px; /* Zone de touche plus grande pour le doigt */
+    padding: 10px;
     background-color: #000;
     color: #fff;
     border: 1px solid #444;
@@ -112,16 +104,15 @@ body {
     margin-bottom: 10px;
     font-family: 'Poppins', sans-serif;
     cursor: pointer;
-    font-size: 1rem; /* Texte lisible sur mobile */
+    font-size: 1rem;
 }
 
-/* Le design commun à TOUS les boutons */
 .btn-add-cart {
     width: 100%;
     padding: 14px;
     background-color: #ffffff;
     color: #000000;
-    border: 1px solid #000; /* Ajout d'une bordure si fond blanc */
+    border: 1px solid #000;
     font-weight: 800;
     text-transform: uppercase;
     cursor: pointer;
@@ -130,7 +121,6 @@ body {
     font-size: 0.9rem;
 }
 
-/* Les spécificités quand c'est hors stock */
 .btn-out-of-stock {
     color: #ac0e0e !important;
     border-color: #ac0e0e;
@@ -138,21 +128,17 @@ body {
     opacity: 0.7;
 }
 
-/* On agrandit progressivement l'écran
-
-/* Tablette (dès 600px de large) */
 @media (min-width: 600px) {
     .products-grid {
-        grid-template-columns: repeat(2, 1fr); /* Passe à 2 colonnes */
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
-/* Petit PC / Tablette Paysage (dès 900px de large) */
 @media (min-width: 900px) {
     .products-grid {
-        grid-template-columns: repeat(3, 1fr); /* Passe à 3 colonnes */
+        grid-template-columns: repeat(3, 1fr);
     }
-    
+
     .page-header {
         padding: 60px 20px;
     }
@@ -160,7 +146,7 @@ body {
     .page-header h1 {
         font-size: 2.5rem;
     }
-    
+
     .product-card:hover {
         transform: translateY(-10px);
         box-shadow: 0 10px 20px rgba(0,0,0,0.5);
@@ -171,10 +157,8 @@ body {
         background-color: #ccc;
         color: #000;
     }
-   
 }
 
-/* Grand Écran (dès 1200px de large) */
 @media (min-width: 1200px) {
     .products-container {
         max-width: 1600px;
@@ -183,13 +167,13 @@ body {
     }
 
     .products-grid {
-        grid-template-columns: repeat(4, 1fr); /* Passe à 4 colonnes comme demandé */
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 
 
 /* Style de la notification Toast */
-.toast-notification {
+#toast-notification {
     visibility: hidden;
     min-width: 280px;
     background-color: #000000; /* Fond noir pur */
@@ -200,7 +184,8 @@ body {
     position: fixed;
     z-index: 10000; /* Toujours au-dessus */
     left: 50%;
-    top: 20px; /* Position en haut */
+    /* On change bottom par top */
+    top: 30px; 
     transform: translateX(-50%);
     font-weight: 700;
     font-size: 0.9rem;
@@ -216,7 +201,8 @@ body {
 /* Classe activée par le JS */
 .toast-notification.show {
     visibility: visible;
-    /* Durée totale 1.5s : 0.3s descente + 0.9s fixe + 0.3s montée */
+    /* L'animation dure 1.5s au total */
+    /* slideDown (0.3s) + attente + slideUp (0.3s démarrant à 1.2s) */
     animation: slideDown 0.3s ease-out, slideUp 0.3s ease-in 1.2s forwards;
 }
 
@@ -228,5 +214,6 @@ body {
 
 @keyframes slideUp {
     from { top: 20px; opacity: 1; }
-    to { top: -70px; opacity: 0; }
+    to { top: -60px; opacity: 0; }
 }
+
