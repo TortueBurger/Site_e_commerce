@@ -2,6 +2,7 @@
 
 require("../management/admin_gestion.php");
 require("../management/product_management.php");
+    
 
 if (isset($_GET["del"])){
     $item_id = (int) $_GET["del"];
@@ -25,15 +26,17 @@ $items = get_all_items_infos();
     <body>
 
         <div class="dashboard-header">
-            <div>
-                <h1>Admin Dashboard</h1>
-                <span style="color:#666; font-size:0.9rem;">Gérez vos produits et stocks</span>
-            </div>
-            <div>
-                <a href="../pages/admin_add.php" class="btn-add">+ Ajouter un produit</a>
-                <a href="../pages/homepage.php" class="btn-logout">Quitter</a>
-            </div>
+        <div>
+            <h1>Admin Dashboard</h1>
+            <span style="color:#666; font-size:0.9rem;">Gérez vos produits et stocks</span>
         </div>
+        <div>
+            <a href="admin_users.php" class="btn-add" style="background-color: #3498db; margin-right: 10px;">
+            <i class="fas fa-users"></i> Gérer les utilisateurs</a>
+            <a href="../pages/admin_add.php" class="btn-add">+ Ajouter un produit</a>
+            <a href="../pages/homepage.php" class="btn-logout">Déconnexion</a>
+        </div>
+    </div>
 
         <div class="table-container">
             <table>
