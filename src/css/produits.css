@@ -187,11 +187,8 @@ body {
     position: fixed;
     z-index: 10000; /* Toujours au-dessus */
     left: 50%;
-<<<<<<< HEAD
-    top: 30px;
-=======
-    top: 20px; /* Position en haut */
->>>>>>> d21a751950842aa3cad853c046e4d270bdd62923
+    /* On change bottom par top */
+    top: 30px; 
     transform: translateX(-50%);
     font-weight: 700;
     font-size: 0.9rem;
@@ -207,10 +204,8 @@ body {
 /* Classe activée par le JS */
 #toast-notification.show {
     visibility: visible;
-<<<<<<< HEAD
-=======
-    /* Durée totale 1.5s : 0.3s descente + 0.9s fixe + 0.3s montée */
->>>>>>> d21a751950842aa3cad853c046e4d270bdd62923
+    /* L'animation dure 1.5s au total */
+    /* slideDown (0.3s) + attente + slideUp (0.3s démarrant à 1.2s) */
     animation: slideDown 0.3s ease-out, slideUp 0.3s ease-in 1.2s forwards;
 }
 
@@ -222,7 +217,6 @@ body {
 
 @keyframes slideUp {
     from { top: 20px; opacity: 1; }
-<<<<<<< HEAD
     to { top: -60px; opacity: 0; }
 }
 =======

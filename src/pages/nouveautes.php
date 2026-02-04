@@ -1,8 +1,6 @@
 <?php 
 ob_start(); 
 
-// --- DONNÉES DES FUTURS DROPS ---
-// On définit les 2 paires exclusives ici
 $drops = [
     1 => [
         'modele' => 'KICKSTEP ONE - MIDNIGHT',
