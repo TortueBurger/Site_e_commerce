@@ -1,16 +1,6 @@
 <?php 
 ob_start();
-
-require_once '../database/create_database.php';
-require_once '../database/create_tables.php';
-require_once '../management/order_gestion.php';
-require_once '../management/product_management.php';
-
 session_start();
-
-if (isset($_SESSION["id"])){
-    echo "<br> Connected User: ".$_SESSION["id"];
-}
 
 ?>
 

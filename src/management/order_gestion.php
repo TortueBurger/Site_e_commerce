@@ -31,6 +31,7 @@ function add_to_order($user_id, $item_id) {
     } else {
         echo "Error: " . $connection->error;
     }
+    return $success;
 }
 
 // Return a list with all the items id of a user

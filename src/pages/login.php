@@ -1,8 +1,6 @@
 <?php 
 ob_start();
-require_once('../management/order_gestion.php');
 require_once('../management/login_request.php');
-require_once('../management/product_management.php');
 
 // Email Already used error
 $mail_error = false;
@@ -10,13 +8,13 @@ if (isset($_GET["error"]) && $_GET["error"] == 1){
     $input_error = true;
 }
 
+// Show message Email/Password is incorrect
 function show_error_message(){
     global $input_error;
     if ($input_error){
         echo "<span style='color:red'>Email/mot de passe incorrect</span>";
     }
 }
-
 
 ?>
     

@@ -15,11 +15,12 @@ if (isset($_POST['id_produit'])) {
     $id_item = intval($_POST['id_produit']);
     
     // Exécution de ta fonction
-    if (add_to_order(1, $id_item)) {
-        // Ce "echo" sera capturé par le .then(message => alert(message)) du JS
-        echo "Le produit n°" . $id_item . " a bien été ajouté à votre commande.";
+   if (add_to_order(1, $id_item)) {
+        echo "succès"; 
+    } else {
+        echo "échec";
     }
-    exit;
+    exit; // INDISPENSABLE
 }
 
 $catalog = get_all_items_infos();
