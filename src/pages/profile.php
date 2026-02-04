@@ -19,7 +19,7 @@ $user = get_user($_SESSION['id']);
             <i class="fas fa-user avatar-icon"></i>
         </div>
         
-        <span class="role-badge">Membre Client</span>
+        <span class="role-badge">Membre <?= $user['role'] ?></span>
 
         <div class="info-group">
             <span class="label">Nom complet</span>
