@@ -1,4 +1,4 @@
-body {
+#content {
             background-color: #121212;
             color: #ffffff;
             font-family: 'Poppins', sans-serif;
@@ -7,7 +7,7 @@ body {
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            min-height: 32vw;
         }
 
     

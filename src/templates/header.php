@@ -17,8 +17,8 @@
                 <img src="../images/logo_ecommerce.png" 
                      alt="Logo Kickstep" 
                      class="logo-img"
-                     style="height: 100px; width: auto; filter: invert(1); mix-blend-mode: screen;">
-                <span class="logo-text">Kickstep</span>            
+                     style="height: 100px;">
+                <span class="logo-text">KICKSTEP</span>            
             </a>
 
             <nav>

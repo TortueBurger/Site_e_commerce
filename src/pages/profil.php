@@ -9,14 +9,10 @@ if (session_status() === PHP_SESSION_NONE) {
 $user = get_user($_SESSION['id']);
 ?>
 
-<!DOCTYPE html>
-<html lang="fr">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/profil.css">
-
-
-
+<div id="content">
     <div class="profile-card">
         
         <div class="avatar-container">
@@ -48,5 +44,6 @@ $user = get_user($_SESSION['id']);
         <a href="produits.php" class="link-home">Retour à la boutique</a>
 
     </div>
+</div>
 <?php $content = ob_get_clean(); ?>
 <?php require('../templates/layout.php') ?>
