@@ -30,15 +30,11 @@
             </nav>
             
             <div class="header-actions">
-                <div class="search-bar">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <path d="m21 21-4.35-4.35"></path>
-                    </svg>
-                    <input type="text" placeholder="Rechercher...">
-                </div>
-
-                <button class="icon-btn" title="Mon compte" onclick='window.location.replace("../pages/login.php")'>
+                <button 
+                    class="icon-btn" 
+                    title="Mon compte" 
+                    data-logged-in="<?php echo isset($_SESSION['id']) ? 'true' : 'false'; ?>"
+                    onclick="handleAccountRedirect(this)">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                         <circle cx="12" cy="7" r="4"></circle>
@@ -55,5 +51,6 @@
             </div>
         </div>
     </header>
+    <script src="../js/handle_redirection.js"></script>
 </body>
 </html>
