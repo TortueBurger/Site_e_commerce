@@ -188,39 +188,45 @@ body {
 }
 
 
+/* Style de la notification Toast */
 #toast-notification {
     visibility: hidden;
-    min-width: 250px;
-    background-color: #000;
-    color: #fff;
+    min-width: 280px;
+    background-color: #000000; /* Fond noir pur */
+    color: #ffffff; /* Texte blanc */
     text-align: center;
-    border-radius: 4px;
-    padding: 16px;
+    border-radius: 50px; /* Forme pilule */
+    padding: 14px 24px;
     position: fixed;
-    z-index: 1000;
+    z-index: 10000; /* Toujours au-dessus */
     left: 50%;
-    /* On change bottom par top */
-    top: 30px; 
+    top: 20px; /* Position en haut */
     transform: translateX(-50%);
-    font-weight: 800;
+    font-weight: 700;
+    font-size: 0.9rem;
     text-transform: uppercase;
     letter-spacing: 1px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
+/* Classe activée par le JS */
 #toast-notification.show {
     visibility: visible;
-    /* L'animation dure 1.5s au total */
-    /* slideDown (0.3s) + attente + slideUp (0.3s démarrant à 1.2s) */
+    /* Durée totale 1.5s : 0.3s descente + 0.9s fixe + 0.3s montée */
     animation: slideDown 0.3s ease-out, slideUp 0.3s ease-in 1.2s forwards;
 }
 
+/* Animations */
 @keyframes slideDown {
-    from { top: -60px; opacity: 0; }
+    from { top: -70px; opacity: 0; }
     to { top: 20px; opacity: 1; }
 }
 
 @keyframes slideUp {
     from { top: 20px; opacity: 1; }
-    to { top: -60px; opacity: 0; }
+    to { top: -70px; opacity: 0; }
 }

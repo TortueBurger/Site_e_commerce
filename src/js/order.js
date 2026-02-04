@@ -9,20 +9,19 @@ function envoyerAuPanier(bouton) {
     })
     .then(response => response.text())
     .then(message => {
-        // On vérifie si le PHP a renvoyé un succès (à adapter selon ton message PHP)
-        if (message.includes("successfully") || message.includes("succès")) {
-            
-            // On affiche la pop-up noire
-            toast.className = "show";
-            
-            // On la retire après 3 secondes (correspond à l'animation CSS)
-            setTimeout(function(){ 
-                toast.className = toast.className.replace("show", ""); 
-            }, 1500);
+    console.log("Réponse reçue :", message); // <--- AJOUTE ÇA POUR VOIR L'ERREUR DANS LA CONSOLE (F12)
 
-        } else {
-            // En cas d'erreur (ex: non connecté), on peut garder une alerte ou un toast rouge
-            alert(message);
-        }
-    });
+    // On transforme tout en minuscules pour être sûr de trouver le mot
+    const msg = message.toLowerCase();
+
+    if (msg.includes("succès") || msg.includes("successfully") || msg.includes("item added")) {
+        // Affiche le Toast noir
+        const toast = document.getElementById("toast-notification");
+        toast.classList.add("show");
+        setTimeout(() => { toast.classList.remove("show"); }, 1500);
+    } else {
+        // Si le message est vide, on affiche une erreur par défaut
+        alert(message || "Erreur inconnue lors de l'ajout");
+    }
+});
 }
