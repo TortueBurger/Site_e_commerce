@@ -20,7 +20,7 @@ if (isset($_SESSION["id"])){
     }
 
     // Delete Item
-    if (isset($_GET["del"]) && isset($_GET["amount"])){
+    if (isset($_GET["del"]) && isset($_GET["amount"]) && isset($_GET["size"])){
         $count = (int) ($_GET["amount"]);
         $item_id = (int) $_GET["del"];
         $size = (int) $_GET["size"];
@@ -29,7 +29,7 @@ if (isset($_SESSION["id"])){
             if ($add){
                 add_to_order($id, $item_id, $size);
             } else {
-                remove_item_from_order($item_id, $id);
+                remove_item_from_order($item_id, $id, $size);
             }
             $count--;
         }
@@ -65,33 +65,28 @@ ob_start();
                 // Display Orders and Checkout Card
                 $total = 0;
                 $seen = [];
-                foreach ($orders as $item_id):
-                    if (in_array($item_id, $seen) or $item_id == ''){
-                        continue;
-                    }
-                    $item = get_item($item_id);
-                    $seen[] = $item_id;
-                    $i = array_keys($orders, $item_id);
-                    $quantity = count($i);
-                    $total += $item["price"]*$quantity;
+                foreach ($orders as $item):
+                    $item_info = get_item($item['item_id']);
+                    $quantity = $item['quantity'];
+                    $total += $item_info["price"]*$quantity;
                 ?>
                     <div class="cart-item">
-                        <img src="<?= $item['image_url'] ?>" alt="<?= $item['name'] ?>">
+                        <img src="<?= $item_info['image_url'] ?>" alt="<?= $item_info['name'] ?>">
                         
                         <div class="item-details">
-                            <div class="item-title"><?= $item['name'] ?></div>
-                            <div class="item-price"><?= number_format($item['price'], 2) ?> €</div>
+                            <div class="item-title"><?= $item_info['name'] ?></div>
+                            <div class="item-price"><?= number_format($item_info['price'], 2) ?> €</div>
                             <div class="item-size">taille: <?= number_format($item['size']) ?> </div>
                         </div>
 
                         <div class="item-quantity">
                             <span>Qté:</span>
-                            <button onclick="load_data_orders('del=<?= $item_id ?>&amount=1')">-</button>
+                            <button onclick="load_data_orders('del=<?= $item['item_id'] ?>&amount=1&size=<?= $item['size'] ?>')">-</button>
                             <input type="text" value="<?= $quantity ?>" class="qty-input" readonly>
-                            <button onclick="load_data_orders('del=<?= $item_id ?>&amount=1&type=1')">+</button>
+                            <button onclick="load_data_orders('del=<?= $item['item_id'] ?>&amount=1&type=1&size=<?= $item['size'] ?>')">+</button>
                         </div>
 
-                        <a href="#" onclick="load_data_orders('del=<?= $item_id ?>&amount=<?= $quantity ?>')" class="btn-remove">Supprimer</a>
+                        <a href="#" onclick="load_data_orders('del=<?= $item['item_id'] ?>&amount=<?= $quantity ?>&size=<?= $item['size'] ?>')" class="btn-remove">Supprimer</a>
                     </div>
                 <?php 
                     endforeach; 
@@ -123,7 +118,7 @@ ob_start();
                 <span><?= number_format($total, 2) ?> €</span>
             </div>
 
-            <a href="#" class="btn-checkout">Procéder au paiement</a>
+            <a href="commandes.php" class="btn-checkout">Procéder au paiement</a>
             <div style="text-align:center; margin-top:10px;">
                 <a href="produits.php" style="font-size:0.8rem; color:#666; text-decoration:none;">Continuer vos achats</a>
             </div>

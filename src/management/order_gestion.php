@@ -156,22 +156,22 @@ function proceed_order($user_id, $amount, $facturation_address, $city, $postal_c
 }
 
 // Get item data from database
-function get_item($item_id){
+function get_item($item_id) {
     global $connection;
+    
     $item = array();
-    $sql = "SELECT name, brand, price, image_url 
-            FROM items 
-            WHERE id = '$item_id'";
-    $result = mysqli_query($connection, $sql);
-    if ($result->num_rows > 0){
-        $row = $result->fetch_assoc();
-        $item = array(
-            "name" => $row["name"],
-            "brand" => $row["brand"],
-            "price" => $row["price"],
-            "image_url" => $row["image_url"]
-        );
+    
+    // 1. Utilisation d'une requête préparée pour la sécurité
+    $stmt = $connection->prepare("SELECT name, brand, price, image_url FROM items WHERE id = ?");
+    $stmt->bind_param("i", $item_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        // 2. On récupère directement le tableau associatif
+        $item = $result->fetch_assoc();
     }
+    
     return $item;
 }
 
@@ -185,20 +185,41 @@ function remove_from_all_orders($item_id) {
     return $success;
 }
 
-function remove_item_from_order($item_id, $user_id) {
+function remove_item_from_order($item_id, $user_id, $size) {
     global $connection;
 
-    // we need to delete the specific item from the order of the user, so we join order_items with orders to find
-    // the correct order_id for the user and delete only the item with the given item_id
+    // 1. On récupère la quantité actuelle
     $query = "
-        DELETE oi FROM order_items oi
+        SELECT oi.id, oi.quantity FROM order_items oi
         JOIN orders o ON oi.order_id = o.id
-        WHERE o.user_id = ? AND oi.item_id = ?
-    ";
-
+        WHERE o.user_id = ? AND oi.item_id = ? AND oi.size = ?";
+    
     $statement = $connection->prepare($query);
-    $statement->bind_param("ii", $user_id, $item_id);
-    $success = $statement->execute();
+    $statement->bind_param("iii", $user_id, $item_id, $size);
+    $statement->execute();
+    $result = $statement->get_result();
+
+    if ($result->num_rows == 0) {
+        return false;
+    }
+
+    $row = $result->fetch_assoc();
+    $order_item_id = $row['id']; // Utiliser l'ID direct est plus rapide pour la suite
+
+    if ($row['quantity'] <= 1) {
+        // 2. Si c'est le dernier exemplaire, on SUPPRIME la ligne
+        // Plus besoin de JOIN ici, on a l'ID précis de la ligne order_items
+        $query_delete = "DELETE FROM order_items WHERE id = ? AND size = ?";
+        $delete_stmt = $connection->prepare($query_delete);
+        $delete_stmt->bind_param("ii", $order_item_id, $size);
+        $success = $delete_stmt->execute();
+    } else {
+        // 3. Sinon, on diminue la QUANTITÉ de 1
+        $query_update = "UPDATE order_items SET quantity = quantity - 1 WHERE id = ? AND size = ?";
+        $update_stmt = $connection->prepare($query_update);
+        $update_stmt->bind_param("ii", $order_item_id, $size);
+        $success = $update_stmt->execute();
+    }
 
     return $success;
 }
