@@ -18,3 +18,5 @@ function get_all_items() {
     return $items;
     }
 }
+
+?>

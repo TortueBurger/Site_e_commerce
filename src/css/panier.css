@@ -1,5 +1,5 @@
 /* --- CONFIGURATION GLOBALE --- */
-.cart-container {
+#cart-container {
     max-width: 1200px;
     margin: 40px auto;
     padding: 0 20px;

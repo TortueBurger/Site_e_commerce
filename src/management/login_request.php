@@ -1,4 +1,4 @@
-<<?php
+<?php
 //Create connection
 require_once('../config/config.php');
 $connection = new mysqli(SERVER_NAME, SERVER_USERNAME, SERVER_PASSWORD, DB_NAME);
