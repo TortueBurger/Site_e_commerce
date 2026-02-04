@@ -23,10 +23,11 @@ if (isset($_SESSION["id"])){
     if (isset($_GET["del"]) && isset($_GET["amount"])){
         $count = (int) ($_GET["amount"]);
         $item_id = (int) $_GET["del"];
+        $size = (int) $_GET["size"];
         $add = isset($_GET["type"]);
         while ($count > 0){
             if ($add){
-                add_to_order($id, $item_id);
+                add_to_order($id, $item_id, $size);
             } else {
                 remove_item_from_order($item_id, $id);
             }
@@ -80,6 +81,7 @@ ob_start();
                         <div class="item-details">
                             <div class="item-title"><?= $item['name'] ?></div>
                             <div class="item-price"><?= number_format($item['price'], 2) ?> €</div>
+                            <div class="item-size">taille: <?= number_format($item['size']) ?> </div>
                         </div>
 
                         <div class="item-quantity">

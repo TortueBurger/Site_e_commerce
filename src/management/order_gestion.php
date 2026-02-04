@@ -5,90 +5,154 @@ $connection = new mysqli(SERVER_NAME, SERVER_USERNAME, SERVER_PASSWORD, DB_NAME)
 function add_to_order($user_id, $item_id, $size) {
     global $connection;
 
-    // 1. Check if an order already exists for this user
-    $check_statment = $connection->prepare("SELECT list_items, size FROM orders WHERE user_id = ?");
-    $check_statment->bind_param("i", $user_id);
-    $check_statment->execute();
-    $result = $check_statment->get_result();
+    // look for an order for the user 
+    $check_order = $connection->prepare("SELECT id FROM orders WHERE user_id = ? LIMIT 1");
+    $check_order->bind_param("i", $user_id);
+    $check_order->execute();
+    $res_order = $check_order->get_result();
 
-    if ($result->num_rows > 0) {
-        // 2. Row exists, so UPDATE it
-        $row = $result->fetch_assoc();
-        $new_list = $row['list_items'] . "," . $item_id;
-        $new_size = $row['size'] . "," . $size;
+    // if not exist create one
+    if ($res_order->num_rows > 0) {
+        $order_id = $res_order->fetch_assoc()['id'];
+    } else {
+        $create_order = $connection->prepare("INSERT INTO orders (user_id) VALUES (?)");
+        $create_order->bind_param("i", $user_id);
+        $create_order->execute();
+        $order_id = $connection->insert_id;
+    }
+
+    // check if the item is already in the order with the same size
+    $check_item = $connection->prepare("SELECT id FROM order_items WHERE order_id = ? AND item_id = ? AND size = ?");
+    $check_item->bind_param("iii", $order_id, $item_id, $size);
+    $check_item->execute();
+    $res_item = $check_item->get_result();
+
+    if ($res_item->num_rows > 0) {
+        // incrase quantity if the item already exist in the order with the same size
+        $item_row = $res_item->fetch_assoc();
+        $order_item_id = $item_row['id'];
         
-        $update_stmt = $connection->prepare("UPDATE orders SET list_items = ?, size = ? WHERE user_id = ?");
-        $update_stmt->bind_param("ssi", $new_list, $new_size, $user_id);
-        $success = $update_stmt->execute();
+        $update_qty = $connection->prepare("UPDATE order_items SET quantity = quantity + 1 WHERE id = ?");
+        $update_qty->bind_param("i", $order_item_id);
+        $success = $update_qty->execute();
     } else {
-        // 3. Row doesn't exist, so INSERT it
-        $insert_stmt = $connection->prepare("INSERT INTO orders (user_id, list_items, size) VALUES (?, ?, ?)");
-        $insert_stmt->bind_param("iss", $user_id, $item_id, $size);
-        $success = $insert_stmt->execute();
+        // item not in order, insert it with quantity 1
+        $insert_item = $connection->prepare("INSERT INTO order_items (order_id, item_id, size, quantity) VALUES (?, ?, ?, 1)");
+        $insert_item->bind_param("iii", $order_id, $item_id, $size);
+        $success = $insert_item->execute();
     }
 
-    if ($success) {
-        // echo "Item added to order successfully";
-    } else {
-        echo "Error: " . $connection->error;
-    }
     return $success;
 }
 
 // Return a list with all the items id of a user
 function get_order_items($user_id) {
     global $connection;
-    $statment = $connection->prepare("SELECT list_items FROM orders WHERE user_id = ?");
-    $statment->bind_param("i", $user_id);
-    $statment->execute();
-    $result = $statment->get_result();
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        return explode(",", $row['list_items']);
-    } else {
-        return [];
+
+    // with join to get all items with their sizes and quantities
+    $query = "
+        SELECT oi.item_id, oi.size, oi.quantity 
+        FROM order_items oi
+        JOIN orders o ON oi.order_id = o.id
+        WHERE o.user_id = ?
+    ";
+
+    $statement = $connection->prepare($query);
+    $statement->bind_param("i", $user_id);
+    $statement->execute();
+    $result = $statement->get_result();
+
+    $items = [];
+    while ($row = $result->fetch_assoc()) {
+        $items[] = $row; 
+        // each $row is like: ['item_id' => 1, 'size' => 42, 'quantity' => 2]
     }
+    return $items;
 }
 
-function get_amount($item_ids) {
+function get_total_amount($user_id) {
     global $connection;
-    $amount = 0;
-    foreach ($item_ids as $item_id) {
-        $statment = $connection->prepare("SELECT price FROM items WHERE id = ?");
-        $statment->bind_param("i", $item_id);
-        $statment->execute();
-        $result = $statment->get_result();
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            $amount += $row['price'];
-        }
+
+    // we calculate the total by summing the price of each item multiplied by its quantity
+    $query = "
+        SELECT SUM(i.price * oi.quantity) as total 
+        FROM order_items oi
+        JOIN orders o ON oi.order_id = o.id
+        JOIN items i ON oi.item_id = i.id
+        WHERE o.user_id = ?
+    ";
+
+    $statement = $connection->prepare($query);
+    $statement->bind_param("i", $user_id);
+    $statement->execute();
+    $result = $statement->get_result();
+
+    if ($row = $result->fetch_assoc()) {
+        // if there are items in the order, return the total, otherwise return 0
+        return $row['total'] ?? 0;
     }
-    return $amount;
+
+    return 0;
 }
 
 function clear_order($user_id) {
     global $connection;
-    $statment = $connection->prepare("DELETE FROM orders WHERE user_id = ?");
-    $statment->bind_param("i", $user_id);
-    $statment->execute();
+
+    // Get the order ID for the user
+    $get_order = $connection->prepare("SELECT id FROM orders WHERE user_id = ?");
+    $get_order->bind_param("i", $user_id);
+    $get_order->execute();
+    $result = $get_order->get_result();
+
+    if ($row = $result->fetch_assoc()) {
+        $order_id = $row['id'];
+
+        // delete all items in the order
+        $delete_items = $connection->prepare("DELETE FROM order_items WHERE order_id = ?");
+        $delete_items->bind_param("i", $order_id);
+        $delete_items->execute();
+
+        // delete the order itself
+        $delete_order = $connection->prepare("DELETE FROM orders WHERE id = ?");
+        $delete_order->bind_param("i", $order_id);
+        $delete_order->execute();
+    }
 }
 
 function proceed_order($user_id, $amount, $facturation_address, $city, $postal_code) {
     global $connection;
-    $statment = $connection->prepare("SELECT list_items FROM orders WHERE user_id = ?");
-    $statment->bind_param("i", $user_id);
-    $statment->execute();
-    $result = $statment->get_result();
+
+    // check if the user has items in the order
+    $check_stmt = $connection->prepare("
+        SELECT o.id 
+        FROM orders o
+        JOIN order_items oi ON o.id = oi.order_id
+        WHERE o.user_id = ?
+        LIMIT 1
+    ");
+    $check_stmt->bind_param("i", $user_id);
+    $check_stmt->execute();
+    $result = $check_stmt->get_result();
+
     if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        echo "Items in order: " . $row['list_items'];
-        $statment =  $connection->prepare("INSERT INTO invoice (user_id, amount, facturation_address, city, postal_code) VALUES (?, ?, ?, ?, ?)");
-        $statment->bind_param("idsss", $user_id, $amount, $facturation_address, $city, $postal_code);
-        $statment->execute();
+        //create an invoice for the order
+        $invoice_stmt = $connection->prepare("
+            INSERT INTO invoice (user_id, amount, facturation_address, city, postal_code) 
+            VALUES (?, ?, ?, ?, ?)
+        ");
+        $invoice_stmt->bind_param("idsss", $user_id, $amount, $facturation_address, $city, $postal_code);
+        
+        if ($invoice_stmt->execute()) {
+            echo "Facture générée avec succès.";
+            
+            // clear the order after proceeding
+            clear_order($user_id);
+        } else {
+            echo "Erreur lors de la création de la facture : " . $connection->error;
+        }
     } else {
-        echo "No items in order.";
+        echo "Impossible de procéder : le panier est vide.";
     }
-    clear_order($user_id);
 }
 
 // Get item data from database
@@ -113,42 +177,28 @@ function get_item($item_id){
 
 function remove_from_all_orders($item_id) {
     global $connection;
-    $statment = $connection->prepare("SELECT user_id, list_items FROM orders");
-    $statment->execute();
-    $result = $statment->get_result();
-    while ($row = $result->fetch_assoc()) {
-        $user_id = $row['user_id'];
-        $items = explode(",", $row['list_items']);
-        if (in_array($item_id, $items)) {
-            $items = array_filter($items, function($id) use ($item_id) {
-                return $id != $item_id;
-            });
-            $new_list = implode(",", $items);
-            $update_stmt = $connection->prepare("UPDATE orders SET list_items = ? WHERE user_id = ?");
-            $update_stmt->bind_param("si", $new_list, $user_id);
-            $update_stmt->execute();
-        }
-    }
+
+    // delete the item from all order_items
+    $statement = $connection->prepare("DELETE FROM order_items WHERE item_id = ?");
+    $statement->bind_param("i", $item_id);
+    $success = $statement->execute();
+    return $success;
 }
 
 function remove_item_from_order($item_id, $user_id) {
     global $connection;
-    $statment = $connection->prepare("SELECT user_id, list_items FROM orders WHERE user_id = ?");
-    $statment->bind_param("i", $user_id);
-    $statment->execute();
-    $result = $statment->get_result();
-    while ($row = $result->fetch_assoc()) {
-        $user_id = $row['user_id'];
-        $items = explode(",", $row['list_items']);
-        foreach ($items as $key => $id) {
-            if ($id == $item_id) {
-                unset($items[$key]);
-                $new_list = implode(",", $items);
-                $update_stmt = $connection->prepare("UPDATE orders SET list_items = ? WHERE user_id = ?");
-                $update_stmt->bind_param("si", $new_list, $user_id);
-                $update_stmt->execute();
-                break;
-            }
-        }
-    }
+
+    // we need to delete the specific item from the order of the user, so we join order_items with orders to find
+    // the correct order_id for the user and delete only the item with the given item_id
+    $query = "
+        DELETE oi FROM order_items oi
+        JOIN orders o ON oi.order_id = o.id
+        WHERE o.user_id = ? AND oi.item_id = ?
+    ";
+
+    $statement = $connection->prepare($query);
+    $statement->bind_param("ii", $user_id, $item_id);
+    $success = $statement->execute();
+
+    return $success;
 }
