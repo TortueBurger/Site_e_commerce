@@ -1,4 +1,16 @@
 <?php 
+ob_start();
+// Start Session
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+if (isset($_SESSION["role"])){
+    if ($_SESSION["role"] !== 'admin'){
+        header('Location: homepage.php');
+    }
+} else{
+    header('Location: homepage.php');
+}
 
 require('../management/order_gestion.php');
 require('../management/product_management.php');
@@ -23,6 +35,7 @@ if (isset($_GET["id"])){
     <link rel="stylesheet" href="../css/admin_edit.css">
 </head>
 <body>
+<div id="content">
 
     <div class="edit-container">
         <h2>Modifier l'article</h2>
@@ -62,6 +75,8 @@ if (isset($_GET["id"])){
             <a href="../pages/admin_dashboard.php" class="btn-cancel">Annuler</a>
         </form>
     </div>
-
+</div>
 </body>
 </html>
+<?php $content = ob_get_clean(); ?>
+<?php require('../templates/layout.php') ?>

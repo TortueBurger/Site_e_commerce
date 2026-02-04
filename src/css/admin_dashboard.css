@@ -1,8 +1,9 @@
-body {
+#content {
     background-color: #121212;
     color: #ffffff;
     font-family: 'Poppins', sans-serif;
     margin: 0;
+    height: 32vw;
     padding: 20px;
 }
 
@@ -124,7 +125,8 @@ td {
 
 .actions {
     display: flex;
-    gap: 10px;
+    padding: 30px 10px;
+
 }
 
 .btn-action {
