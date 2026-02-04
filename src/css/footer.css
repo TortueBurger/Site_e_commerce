@@ -158,6 +158,20 @@ body {
 .logo-link:hover .logo-img {
     transform: scale(1.1); 
 }
+.admin-link {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 0.8rem; 
+    color: #444;       
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.admin-link:hover {
+    color: #fff;       
+    cursor: pointer;
+}
+
 
 
 @media (max-width: 768px) {
@@ -189,3 +203,4 @@ body {
         height: 40px;
     }
 }
+

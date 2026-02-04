@@ -12,8 +12,8 @@
         <div class="footer-col">
           <div class="logo-link">
     <img src="../images/logo_ecommerce.png" 
-         alt="Logo Kickstep" 
-         style="height: 100px; width: auto; filter: invert(1); mix-blend-mode: screen;">
+          alt="Logo Kickstep" 
+          style="height: 100px; width: auto; filter: invert(1); mix-blend-mode: screen;">
 </div>
             <p class="footer-desc">
                 La référence du style urbain. Qualité premium et designs exclusifs pour votre garde-robe.
@@ -58,7 +58,9 @@
     <div class="footer-bottom">
         <p>&copy; 2026 SHOP. Tous droits réservés.</p>
         <p>Paiement sécurisé : Visa • MasterCard • PayPal</p>
-    </div>
+        
+        <a href="../pages/admin_dashboard.php" class="admin-link">Admin Access</a>
+        </div>
 </footer>
 </body>
 </html>
