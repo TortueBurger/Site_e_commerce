@@ -4,10 +4,6 @@ require_once('../management/order_gestion.php');
 require_once('../management/login_request.php');
 require_once('../management/product_management.php');
 
-if (isset($_SESSION["name"])){
-    echo $_SESSION["name"];
-}
-
 // Email Already used error
 $mail_error = false;
 if (isset($_GET["error"]) && $_GET["error"] == 1){
@@ -23,24 +19,34 @@ function show_error_message(){
 
 
 ?>
+    
+    <link rel="stylesheet" href="../css/login.css">
     <div class="main">
-        <h2>Connexion</h2>
-        <form action="../pages/login.php" method="POST">
+    <div class="content">
+        <div class="card-center">
+            <h2>Se Connecter</h2>
+            
+            <form action="../pages/login.php" method="POST" class="login-form">
+                <div class="input-group">
+                    <input type="email" name="email" placeholder="Adresse e-mail..." required>
+                    <?php if(function_exists('show_error_message')) show_error_message(); ?>
+                </div>
 
-            <label>Email :</label><br>
-            <input type="email" name="email" required><br>
-            <?php show_error_message() ?>
-            <br>
+                <div class="input-group">
+                    <input type="password" name="password" minlength="8" placeholder="Mot de passe..." required>
+                    <?php if(function_exists('show_error_message')) show_error_message(); ?>
+                </div>
 
-            <label>Password :</label><br>
-            <input type="password" name="password" minlength="8" required><br>
-            <?php show_error_message() ?>
-            <br>
-
-            <a href="register.php">Pas encore de compte ? Cliquez ici !</a><br>
-            <button type="submit">Connexion</button>
-        </form>
+                <button type="submit" class="send">Se Connecter</button>
+                
+                <div class="footer-links">
+                    <span>Pas encore de compte ?</span>
+                    <a href="register.php">S'inscrire</a>
+                </div>
+            </form>
+        </div>
     </div>
+</div>
 
 <?php $content = ob_get_clean(); ?>
 <?php require('../templates/layout.php') ?>

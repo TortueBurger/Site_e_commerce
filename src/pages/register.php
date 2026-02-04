@@ -20,23 +20,36 @@ function show_mail_error_message(){
 }
 
 ?>
-    <div class=main">
-        <h2>Inscription</h2>
-        <form action="register.php" method="POST">
-            <label>Username :</label><br>
-            <input type="text" name="username" maxlength="16" required><br><br>
-
-            <label>Email :</label><br>
-            <input type="email" name="email" required>
-            <br><?php show_mail_error_message() ?><br>
+    <link rel="stylesheet" href="../css/login.css">
+    <div class="main">
+    <div class="content">
+        <div class="card-center">
+            <h2>S'inscrire</h2>
             
+            <form action="../pages/register.php" method="POST" class="login-form">
+                <div class="input-group">
+                    <input name="name" placeholder="Nom d'utilisateur" required>
+                </div>
+            
+                <div class="input-group">
+                    <input type="email" name="email" placeholder="Adresse e-mail..." required>
+                    <?php show_mail_error_message(); ?>
+                </div>
 
-            <label>Password :</label><br>
-            <input type="password" name="password" minlength="8" required><br><br>
+                <div class="input-group">
+                    <input type="password" name="password" minlength="8" placeholder="Mot de passe..." required>
+                </div>
 
-            <a href="login.php">Déjà inscrit ? Cliquez ici !</a><br>
-            <button type="submit">Inscription</button>
-        </form>
+                <button type="submit" class="send">S'inscrire</button>
+                
+                <div class="footer-links">
+                    <span>Déjà inscrit ?</span>
+                    <a href="login.php">Se connecter</a>
+                </div>
+            </form>
+        </div>
     </div>
+</div>
+
 <?php $content = ob_get_clean(); ?>
 <?php require('../templates/layout.php') ?>

@@ -27,7 +27,7 @@ function add_to_order($user_id, $item_id) {
     }
 
     if ($success) {
-        echo "Item added to order successfully";
+        // echo "Item added to order successfully";
     } else {
         echo "Error: " . $connection->error;
     }
@@ -93,7 +93,7 @@ function proceed_order($user_id, $amount, $facturation_address, $city, $postal_c
 function get_item($item_id){
     global $connection;
     $item = array();
-    $sql = "SELECT name, marque, description, price, image_url 
+    $sql = "SELECT name, brand, price, image_url 
             FROM items 
             WHERE id = '$item_id'";
     $result = mysqli_query($connection, $sql);
@@ -101,8 +101,7 @@ function get_item($item_id){
         $row = $result->fetch_assoc();
         $item = array(
             "name" => $row["name"],
-            "marque" => $row["marque"],
-            "description" => $row["description"],
+            "brand" => $row["brand"],
             "price" => $row["price"],
             "image_url" => $row["image_url"]
         );

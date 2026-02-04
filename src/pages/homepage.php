@@ -8,7 +8,7 @@ require_once '../management/product_management.php';
 
 session_start();
 
-if (isset($_SESSION["name"])){
+if (isset($_SESSION["id"])){
     echo "<br> Connected User: ".$_SESSION["id"];
 }
 
