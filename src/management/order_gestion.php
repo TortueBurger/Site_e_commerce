@@ -143,7 +143,6 @@ function proceed_order($user_id, $amount, $facturation_address, $city, $postal_c
         $invoice_stmt->bind_param("idsss", $user_id, $amount, $facturation_address, $city, $postal_code);
         
         if ($invoice_stmt->execute()) {
-            echo "Facture générée avec succès.";
             $order_items = get_order_items($user_id);
             // clear the order after proceeding and update the stock
             foreach ($order_items as $item) {
@@ -231,11 +230,26 @@ function update_stock($item_id, $quantity_change) {
     global $connection;
 
     // update the stock for the item and size
-    $stmt = $connection->prepare("UPDATE stock SET quantity = quantity + ? WHERE item_id = ?");
+    $stmt = $connection->prepare("UPDATE stock SET quantity_in_stocks = quantity_in_stocks + ? WHERE item_id = ?");
     $stmt->bind_param("ii", $quantity_change, $item_id);
     $success = $stmt->execute();
 
     return $success;
+}
+
+function get_order_id($user_id) {
+    global $connection;
+
+    $stmt = $connection->prepare("SELECT id FROM orders WHERE user_id = ?");
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($row = $result->fetch_assoc()) {
+        return $row['id'];
+    }
+
+    return null;
 }
 
 function get_user($user_id) {
@@ -255,19 +269,4 @@ function get_user($user_id) {
         );
     }
     return $item;
-}
-
-function get_order_id($user_id) {
-    global $connection;
-
-    $stmt = $connection->prepare("SELECT id FROM orders WHERE user_id = ?");
-    $stmt->bind_param("i", $user_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($row = $result->fetch_assoc()) {
-        return $row['id'];
-    }
-
-    return null;
 }

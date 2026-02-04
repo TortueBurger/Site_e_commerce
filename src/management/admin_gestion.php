@@ -146,24 +146,6 @@ function get_users() {
     return $users;
 }
 
-function get_user($user_id) {
-    global $connection;
-    $item = array();
-    $sql = "SELECT id, name, email, role
-            FROM users 
-            WHERE id = '$user_id'";
-    $result = mysqli_query($connection, $sql);
-    if ($result->num_rows > 0){
-        $row = $result->fetch_assoc();
-        $item = array(
-            "id" => $row["id"],
-            "name" => $row["name"],
-            "email" => $row["email"],
-            "role" => $row["role"]
-        );
-    }
-    return $item;
-}
 
 
 function delete_user($user_id) {
