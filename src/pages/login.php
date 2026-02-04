@@ -27,12 +27,12 @@ function show_error_message(){
             <form action="../pages/login.php" method="POST" class="login-form">
                 <div class="input-group">
                     <input type="email" name="email" placeholder="Adresse e-mail..." required>
-                    <?php if(function_exists('show_error_message')) show_error_message(); ?>
+                    <?php show_error_message(); ?>
                 </div>
 
                 <div class="input-group">
                     <input type="password" name="password" minlength="8" placeholder="Mot de passe..." required>
-                    <?php if(function_exists('show_error_message')) show_error_message(); ?>
+                    <?php show_error_message(); ?>
                 </div>
 
                 <button type="submit" class="send">Se Connecter</button>

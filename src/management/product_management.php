@@ -1,5 +1,11 @@
 <?php
-require_once('../config/config.php');
+
+if (isset($is_main)){
+    require_once('config/config.php');
+} else{
+    require_once('../config/config.php');
+}
+
 $connection = new mysqli(SERVER_NAME, SERVER_USERNAME, SERVER_PASSWORD, DB_NAME);
 
 //Return all items in database in a dictionary

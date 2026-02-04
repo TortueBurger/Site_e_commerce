@@ -1,6 +1,17 @@
 <?php 
 ob_start();
-session_start();
+
+// Start Session
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Reset Session
+if (isset($_GET["main"]) && isset($_GET["main"]) == 1){
+    session_unset();
+    session_destroy();
+}
+
 
 ?>
 
