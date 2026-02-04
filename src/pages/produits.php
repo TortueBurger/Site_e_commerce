@@ -8,13 +8,14 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-if (isset($_POST['id_produit']) && isset($_SESSION["id"])) {
+if (isset($_POST['id_produit'], $_POST['size']) && isset($_SESSION["id"])) {
     // Sécurisation de la donnée (on force un nombre entier)
     $id = $_SESSION["id"];
     $id_item = intval($_POST['id_produit']);
+    $size = intval($_POST['size']);
     
     // Exécution de ta fonction
-   if (add_to_order($id, $id_item)) {
+   if (add_to_order($id, $id_item, $size)) {
         echo "succès"; 
     } else {
         echo "échec";
@@ -48,27 +49,19 @@ $catalog = get_all_items_infos();
                         <div class="product-title"><?= $produit['name'] ?></div>
                         <div class="product-price"><?= number_format($produit['price'], 2) ?> €</div>
                         
-                        <form action="panier.php" method="GET" class="product-form">
-                            <input type="hidden" name="id" value="<?= $id ?>">
+                        <form class="product-form">
+                            <input type="hidden" name="id" value="<?= $produit['id'] ?>">
                             
-                            <select name="taille" class="size-selector" required>
+                            <select name="size" class="size-selector" required>
                                 <option value="" disabled selected>Choisir une taille</option>
-                                <option value="38">38</option>
-                                <option value="39">39</option>
-                                <option value="40">40</option>
-                                <option value="41">41</option>
-                                <option value="42">42</option>
-                                <option value="43">43</option>
-                                <option value="44">44</option>
-                                <option value="45">45</option>
-                                <option value="46">46</option>
-                                <option value="47">47</option>
-
+                                <?php for($i=38; $i<=47; $i++): ?>
+                                    <option value="<?= $i ?>"><?= $i ?></option>
+                                <?php endfor; ?>
                             </select>
                             <?php if ($produit['quantity_in_stocks'] > 0): ?>
                                 <?php if (isset($_SESSION["id"])): ?>
                                     <button type="button" 
-                                            class="btn-add-cart" 
+                                            class="btn-add-cart"
                                             data-id="<?php echo $produit['id']; ?>" 
                                             onclick="envoyerAuPanier(this)">
                                         Ajouter au panier
@@ -95,7 +88,8 @@ $catalog = get_all_items_infos();
 
         </div>
     </div>
-    <div id="toast-notification">✅ Article ajouté au panier</div>
+    <div class="toast-notification" id="toast-add-to-order">✅ Article ajouté au panier</div>
+    <div class="toast-notification" id="toast-select-size">❌ Veuillez choisir une taille</div>
     <script src="../js/order.js"></script>
 
 <?php $content = ob_get_clean(); ?>

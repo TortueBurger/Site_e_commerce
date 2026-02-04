@@ -189,7 +189,7 @@ body {
 
 
 /* Style de la notification Toast */
-#toast-notification {
+.toast-notification {
     visibility: hidden;
     min-width: 280px;
     background-color: #000000; /* Fond noir pur */
@@ -214,7 +214,7 @@ body {
 }
 
 /* Classe activée par le JS */
-#toast-notification.show {
+.toast-notification.show {
     visibility: visible;
     /* Durée totale 1.5s : 0.3s descente + 0.9s fixe + 0.3s montée */
     animation: slideDown 0.3s ease-out, slideUp 0.3s ease-in 1.2s forwards;

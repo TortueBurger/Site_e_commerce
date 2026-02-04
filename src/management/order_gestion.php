@@ -2,11 +2,11 @@
 require_once('../config/config.php');
 $connection = new mysqli(SERVER_NAME, SERVER_USERNAME, SERVER_PASSWORD, DB_NAME);
 
-function add_to_order($user_id, $item_id) {
+function add_to_order($user_id, $item_id, $size) {
     global $connection;
 
     // 1. Check if an order already exists for this user
-    $check_statment = $connection->prepare("SELECT list_items FROM orders WHERE user_id = ?");
+    $check_statment = $connection->prepare("SELECT list_items, size FROM orders WHERE user_id = ?");
     $check_statment->bind_param("i", $user_id);
     $check_statment->execute();
     $result = $check_statment->get_result();
@@ -15,14 +15,15 @@ function add_to_order($user_id, $item_id) {
         // 2. Row exists, so UPDATE it
         $row = $result->fetch_assoc();
         $new_list = $row['list_items'] . "," . $item_id;
+        $new_size = $row['size'] . "," . $size;
         
-        $update_stmt = $connection->prepare("UPDATE orders SET list_items = ? WHERE user_id = ?");
-        $update_stmt->bind_param("si", $new_list, $user_id);
+        $update_stmt = $connection->prepare("UPDATE orders SET list_items = ?, size = ? WHERE user_id = ?");
+        $update_stmt->bind_param("ssi", $new_list, $new_size, $user_id);
         $success = $update_stmt->execute();
     } else {
         // 3. Row doesn't exist, so INSERT it
-        $insert_stmt = $connection->prepare("INSERT INTO orders (user_id, list_items) VALUES (?, ?)");
-        $insert_stmt->bind_param("is", $user_id, $item_id);
+        $insert_stmt = $connection->prepare("INSERT INTO orders (user_id, list_items, size) VALUES (?, ?, ?)");
+        $insert_stmt->bind_param("iss", $user_id, $item_id, $size);
         $success = $insert_stmt->execute();
     }
 

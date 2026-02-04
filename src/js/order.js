@@ -1,27 +1,45 @@
 function envoyerAuPanier(bouton) {
     const idProduit = bouton.getAttribute('data-id');
-    const toast = document.getElementById("toast-notification");
+    const toast_add_to_order = document.getElementById("toast-add-to-order");
+    const toast_select_size = document.getElementById("toast-select-size");
 
-    fetch('produits.php', { 
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: 'id_produit=' + encodeURIComponent(idProduit)
-    })
-    .then(response => response.text())
-    .then(message => {
-    console.log("Réponse reçue :", message); // <--- AJOUTE ÇA POUR VOIR L'ERREUR DANS LA CONSOLE (F12)
+    const parentForm = bouton.closest('.product-form');
+    // CORRECTION : on cherche 'size' et non 'taille'
+    const sizeSelect = parentForm ? parentForm.querySelector('select[name="size"]') : null;
 
-    // On transforme tout en minuscules pour être sûr de trouver le mot
-    const msg = message.toLowerCase();
+    if (sizeSelect) {
+        const selectedSize = sizeSelect.value;
 
-    if (msg.includes("succès") || msg.includes("successfully") || msg.includes("item added")) {
-        // Affiche le Toast noir
-        const toast = document.getElementById("toast-notification");
-        toast.classList.add("show");
-        setTimeout(() => { toast.classList.remove("show"); }, 1500);
-    } else {
-        // Si le message est vide, on affiche une erreur par défaut
-        alert(message || "Erreur inconnue lors de l'ajout");
+        if (!selectedSize || selectedSize === "") {
+            if (toast_select_size) {
+                toast_select_size.classList.add("show");
+                setTimeout(() => { toast_select_size.classList.remove("show"); }, 1500);
+            }
+            return;
+        }
+
+        fetch('produits.php', { 
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            // CORRECTION : on envoie 'size' pour correspondre au PHP
+            body: 'id_produit=' + encodeURIComponent(idProduit) + '&size=' + encodeURIComponent(selectedSize)
+        })
+        .then(response => response.text())
+        .then(message => {
+            console.log("Réponse reçue :", message);
+            const msg = message.toLowerCase();
+
+            if (msg.includes("succès") || msg.includes("successfully")) {
+                if (toast_add_to_order) {
+                    toast_add_to_order.classList.add("show");
+                    setTimeout(() => { toast_add_to_order.classList.remove("show"); }, 1500);
+                }
+            } else {
+                alert(message || "Erreur inconnue lors de l'ajout");
+            }
+        })
+        .catch(error => {
+            console.error("Erreur Fetch :", error);
+        });
     }
-});
 }
