@@ -15,6 +15,8 @@
             <span style="color:#666; font-size:0.9rem;">Gérez vos produits et stocks</span>
         </div>
         <div>
+            <a href="admin_users.php" class="btn-add" style="background-color: #3498db; margin-right: 10px;">
+            <i class="fas fa-users"></i> Gérer les utilisateurs</a>
             <a href="../pages/admin_add.php" class="btn-add">+ Ajouter un produit</a>
             <a href="../pages/homepage.php" class="btn-logout">Déconnexion</a>
         </div>
