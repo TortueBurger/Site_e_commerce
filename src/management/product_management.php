@@ -32,19 +32,19 @@ function default_database(){
     // Prepare and bind
     $statment = $connection->prepare("INSERT INTO items (name, brand, price, image_url) VALUES (?, ?, ?, ?), (?, ?, ?, ?), (?, ?, ?, ?);");
 
-    $name = "Air max";
+    $name = "Air Jordan 1 Retro OG";
     $brand = "Nike";
-    $price = 120;
+    $price = 129.99;
     $image_url = "../images/img1.jpg";
 
     $name2 = "Shox Black";
     $brand2 = "Nike";
-    $price2 = 150;
+    $price2 = 149.99;
     $image_url2 = "../images/img2.jpg";
 
     $name3 = "Nocta white";
     $brand3 = "Nike";
-    $price3 = 80;
+    $price3 = 134.99;
     $image_url3 = "../images/img3.jpg";
  
 
@@ -76,9 +76,9 @@ function default_database(){
         echo "Error inserting stock: " . $connection->error;
     }
 
-    $password = password_hash("password", PASSWORD_DEFAULT);
+    $password = password_hash("motdepasse", PASSWORD_DEFAULT);
     $sql = "INSERT INTO users (name, email, password, role) 
-    VALUES ('admin', 'admin@admin.admin', '$password', 'admin')";
+    VALUES ('admin', 'admin@kickstep.com', '$password', 'admin')";
     
     if ($connection -> query($sql) == TRUE){
         return;

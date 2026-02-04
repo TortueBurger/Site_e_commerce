@@ -47,7 +47,7 @@ if (isset($_GET["main"]) && isset($_GET["main"]) == 1){
     <section class="final-cta">
         <h2>Prêt à trouver votre paire ?</h2>
         <p style="margin-bottom: 30px; color: #666;">Parcourez notre catalogue complet et faites votre choix.</p>
-        <a href="produits.php" class="btn-black">Accéder à la boutique</a>
+        <a href="products.php" class="btn-black">Accéder à la boutique</a>
     </section>
 
 <?php $content = ob_get_clean(); ?>

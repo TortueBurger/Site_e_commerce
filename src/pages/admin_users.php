@@ -1,4 +1,16 @@
 <?php 
+ob_start();
+// Start Session
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+if (isset($_SESSION["role"])){
+    if ($_SESSION["role"] !== 'admin'){
+        header('Location: homepage.php');
+    }
+} else{
+    header('Location: homepage.php');
+}
 
 require('../management/admin_gestion.php');
 
@@ -79,3 +91,5 @@ $users = get_users();
     </body>
 </div>
 </html>
+<?php $content = ob_get_clean(); ?>
+<?php require('../templates/layout.php') ?>

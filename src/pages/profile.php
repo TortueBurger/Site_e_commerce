@@ -41,7 +41,7 @@ $user = get_user($_SESSION['id']);
             <i class="fas fa-sign-out-alt"></i> Se déconnecter
         </a>
 
-        <a href="produits.php" class="link-home">Retour à la boutique</a>
+        <a href="products.php" class="link-home">Retour à la boutique</a>
 
     </div>
 </div>

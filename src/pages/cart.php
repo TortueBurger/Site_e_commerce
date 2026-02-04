@@ -57,7 +57,7 @@ ob_start();
             if (empty($orders)): ?>
                 <div class="empty-cart">
                     <p>Votre panier est vide pour le moment.</p>
-                    <a href="produits.php" class="btn-back">Retourner à la boutique</a>
+                    <a href="products.php" class="btn-back">Retourner à la boutique</a>
                 </div>
             <?php else: ?>
                 
@@ -119,14 +119,18 @@ ob_start();
             </div>
 
             <form method="POST" action="commands.php">
-                <input type="text" placeholder="Adresse..." name="address" required>
-                <input type="text" placeholder="Ville..." name="city" required>
-                <input type="text" placeholder="Code Postal..." name="zipcode" required>
+                <input type="text" placeholder="Adresse complète..." name="address" required>
+                
+                <div class="row-address" style="display: flex; gap: 10px;">
+                    <input type="text" placeholder="Ville..." name="city" style="flex: 2;" required>
+                    <input type="text" placeholder="Code Postal..." name="zipcode" style="flex: 1;" required>
+                </div>
+                
                 <button type="submit" class="btn-checkout">Procéder au paiement</button>
             </form>
 
             <div style="text-align:center; margin-top:10px;">
-                <a href="produits.php" style="font-size:0.8rem; color:#666; text-decoration:none;">Continuer vos achats</a>
+                <a href="products.php" style="font-size:0.8rem; color:#666; text-decoration:none;">Continuer vos achats</a>
             </div>
         </div>
         <?php endif; ?>
