@@ -11,31 +11,36 @@
     <div class="edit-container">
         <h2>Ajouter un nouveau produit</h2>
 
-        <form>
+        <form method="POST" enctype="multipart/form-data" action="../management/admin_gestion.php?type=2">
             <div class="current-img">
-                <img src="https://via.placeholder.com/300x200/333/fff?text=Sneaker+Preview" alt="Aperçu actuel">
+                <img src="" alt="Aperçu actuel">
                 <span>Image actuelle</span>
             </div>
 
             <div class="form-group">
+                <label>Marque</label>
+                <input type="text" value="" name="brand" required>
+            </div>
+
+            <div class="form-group">
                 <label>Nom du modèle</label>
-                <input type="text" value="Nike Air Jordan 1 High" required>
+                <input type="text" value="" name="name" required>
             </div>
 
             <div class="row-2-cols">
                 <div class="form-group">
                     <label>Prix (€)</label>
-                    <input type="number" step="0.01" value="" required>
+                    <input type="number" step="0.01" name="price" value="" required>
                 </div>
                 <div class="form-group">
                     <label>Stock</label>
-                    <input type="number" value="0" required>
+                    <input type="number" value="0"  name="stock" required>
                 </div>
             </div>
 
             <div class="form-group">
                 <label>Changer l'image (Optionnel)</label>
-                <input type="file">
+                <input type="file" name="image" id="image">
             </div>
 
             <button type="submit" class="btn-save">Enregistrer les modifications</button>
