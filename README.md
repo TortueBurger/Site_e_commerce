@@ -96,3 +96,5 @@ Site_e_commerce/
    ```
 
 3. **Initaliser le projet en lançant via WAMP 'main.php'**
+
+**Attention, si vous relancez 'main.php' alors qu'une base de donnée existe déjà, les produits ajoutés lors de se lancement n'auront pas de stock attribué. Nous recommandons de supprimer la base de donnée sur 'localhost/phpmyadmin5.2.3' avant de relancer le 'main.php'.**
