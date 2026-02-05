@@ -27,13 +27,13 @@ function envoyerAuPanier(bouton) {
             console.log("Réponse reçue :", message);
             const msg = message.toLowerCase();
 
-            if (msg.includes("succès") || msg.includes("successfully")) {
+            if (msg.includes("success") || msg.includes("successfully")) {
                 if (toast_add_to_order) {
                     toast_add_to_order.classList.add("show");
                     setTimeout(() => { toast_add_to_order.classList.remove("show"); }, 1500);
                 }
             } else {
-                alert(message || "Erreur inconnue lors de l'ajout");
+                // alert(message || "Erreur inconnue lors de l'ajout");
             }
         })
         .catch(error => {

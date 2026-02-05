@@ -116,7 +116,7 @@ function delete_item($item_id) {
     $statment->bind_param("i", $item_id);
 
     if ($statment->execute()) {
-        echo "Item deleted successfully.";
+        // echo "Item deleted successfully.";
     } else {
         echo "Error deleting item: " . $connection->error;
     }
@@ -126,7 +126,7 @@ function delete_item($item_id) {
     $statment->bind_param("i", $item_id);
 
     if ($statment->execute()) {
-        echo "Item deleted successfully.";
+        // echo "Item deleted successfully.";
     } else {
         echo "Error deleting item: " . $connection->error;
     }
@@ -155,7 +155,7 @@ function delete_user($user_id) {
     $statment->bind_param("i", $user_id);
 
     if ($statment->execute()) {
-        echo "User deleted successfully.";
+        // echo "User deleted successfully.";
     } else {
         echo "Error deleting user: " . $connection->error;
     }

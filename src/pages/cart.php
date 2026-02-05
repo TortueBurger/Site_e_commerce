@@ -9,6 +9,7 @@ if (session_status() === PHP_SESSION_NONE) {
 $ajax = isset($_GET["ajax"]);
 
 require_once("../management/order_gestion.php");
+require_once("../management/product_management.php");
 
 // Get Orders with Session ID 
 if (isset($_SESSION["id"])){
@@ -19,15 +20,27 @@ if (isset($_SESSION["id"])){
         clear_order($id);
     }
 
+    // Orders before update
+    $orders = get_order_items($id);
+
     // Delete Item
     if (isset($_GET["del"]) && isset($_GET["amount"]) && isset($_GET["size"])){
         $count = (int) ($_GET["amount"]);
         $item_id = (int) $_GET["del"];
         $size = (int) $_GET["size"];
         $add = isset($_GET["type"]);
+        $quantity = 0;
+        foreach($orders as $item){
+            if($item["item_id"] == $item_id){
+                $quantity = $item["quantity"];
+            }
+        }
+        $stock = get_item_stock($item_id);
         while ($count > 0){
             if ($add){
-                add_to_order($id, $item_id, $size);
+                if (!($quantity >= $stock)){
+                    add_to_order($id, $item_id, $size);
+                }
             } else {
                 remove_item_from_order($item_id, $id, $size);
             }
@@ -35,6 +48,7 @@ if (isset($_SESSION["id"])){
         }
     }
 
+    // Updated version
     $orders = get_order_items($id);
     if (count($orders) == 1 && $orders[0] == ''){
         $orders = [];

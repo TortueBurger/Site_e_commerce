@@ -15,7 +15,7 @@ function load_data_orders(extra) {
 // AJAX Dashbaord Admin
 function load_data_dashboard(extra) {
     // Debug
-    const url = '../pages/admin_dashboard.php?' + extra;
+    const url = '../pages/admin_dashboard.php?ajax=1&' + extra;
     console.log("URL envoyée au serveur :", url);
     
     fetch(url)
@@ -29,7 +29,7 @@ function load_data_dashboard(extra) {
 // AJAX Dashbaord Admin User
 function load_data_users(extra) {
     // Debug
-    const url = '../pages/admin_users.php?' + extra;
+    const url = '../pages/admin_users.php?ajax=1&' + extra;
     console.log("URL envoyée au serveur :", url);
     
     fetch(url)

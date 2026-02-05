@@ -9,18 +9,28 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 if (isset($_POST['id_produit'], $_POST['size']) && isset($_SESSION["id"])) {
-    // Sécurisation de la donnée (on force un nombre entier)
     $id = $_SESSION["id"];
     $id_item = intval($_POST['id_produit']);
     $size = intval($_POST['size']);
     
-    // Exécution de ta fonction
-   if (add_to_order($id, $id_item, $size)) {
-        echo "succès"; 
-    } else {
-        echo "échec";
+    $order = get_order_items($id);
+    $stock = get_item_stock($id_item);
+    $quantity = 0;
+
+    foreach($order as $item){
+        if($item["item_id"] == $id_item){
+            $quantity = $item["quantity"];
+        }
     }
-    exit; // INDISPENSABLE
+
+    if (!($quantity >= $stock)){
+        if (add_to_order($id, $id_item, $size)) {
+            echo "success"; 
+        } else {
+            echo "failure";
+        }
+    }
+    exit;
 }
 
 $catalog = get_all_items_infos();
@@ -30,7 +40,8 @@ $catalog = get_all_items_infos();
 <!DOCTYPE html>
 <html lang="fr">
 <link rel="stylesheet" href="../css/products.css">
-
+    
+    <?php if(!empty($catalog)): ?>
     <div class="page-header">
         <h1>Notre Collection</h1>
         <p>Découvrez nos <?= count($catalog) ?> modèles exclusifs du moment.</p>
@@ -88,6 +99,13 @@ $catalog = get_all_items_infos();
 
         </div>
     </div>
+    <?php else: ?>
+        <div class="page-header">
+        <h1>Notre Collection</h1>
+        <p>Désolé ya pu.</p>
+    </div>
+    <div class="products-container" style="height:17vw;"></div>
+    <?php endif ?>
     <div class="toast-notification" id="toast-add-to-order">✅ Article ajouté au panier</div>
     <div class="toast-notification" id="toast-select-size">❌ Veuillez choisir une taille</div>
     <script src="../js/order.js"></script>

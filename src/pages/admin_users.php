@@ -4,6 +4,9 @@ ob_start();
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
+$ajax = isset($_GET["ajax"]);
+
 if (isset($_SESSION["role"])){
     if ($_SESSION["role"] !== 'admin'){
         header('Location: homepage.php');
@@ -92,4 +95,10 @@ $users = get_users();
 </div>
 </html>
 <?php $content = ob_get_clean(); ?>
-<?php require('../templates/layout.php') ?>
+<?php 
+if ($ajax){
+    echo $content;
+} else{
+    require('../templates/layout.php');
+} 
+?>
